@@ -97,7 +97,7 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
     }
 
     if (!schema.format) {
-      return baseType["default"].type;
+      return baseType["default"]?.type;
     }
 
     const formatType = baseType[schema.format];

@@ -1,0 +1,150 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Sample API",
+      "version": "1.0.0",
+      "description": "A sample API for testing purposes"
+    },
+    "tags": [
+      {
+        "name": "Users",
+        "description": "Operations related to users"
+      },
+      {
+        "name": "Posts",
+        "description": "Operations related to posts"
+      }
+    ],
+    "paths": {
+      "/users": {
+        "get": {
+          "tags": ["Users"],
+          "summary": "Get a list of users",
+          "description": "Returns a list of all users.",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Users"],
+          "summary": "Create a new user",
+          "description": "Creates a new user.",
+          "requestBody": {
+            "description": "User object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/posts": {
+        "get": {
+          "tags": ["Posts"],
+          "summary": "Get a list of posts",
+          "description": "Returns a list of all posts.",
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Post"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Posts"],
+          "summary": "Create a new post",
+          "description": "Creates a new post.",
+          "requestBody": {
+            "description": "Post object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Post created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "username": {
+              "type": "string"
+            }
+          }
+        },
+        "Post": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  
