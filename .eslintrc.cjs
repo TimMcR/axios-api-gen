@@ -5,6 +5,7 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     root: true,
     rules: {
-        '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    "@typescript-eslint/no-explicit-any": "off" // TODO - disable later
     }
   };
