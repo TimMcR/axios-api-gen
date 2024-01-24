@@ -1,6 +1,6 @@
-import {createCleanFile} from '../utils/string';
-import {CodegenOptions} from './codegen';
-import {getApiRequestInfo} from './get-api-request-info';
+import {CodegenOptions} from "./codegen";
+import {getApiRequestInfo} from "./get-api-request-info";
+import {createCleanFile} from "./utils/string";
 
 type getHttpMethodsReturnType = {
   httpMethodsTypeDeclarations: string;
@@ -13,14 +13,14 @@ export function getHttpMethods(
   const {operationsGroupedByHttpMethod, generateHttpMethods} = options;
 
   if (!generateHttpMethods) {
-    return {httpMethodsTypeDeclarations: '', httpMethods: ''};
+    return {httpMethodsTypeDeclarations: "", httpMethods: ""};
   }
 
   const httpMethodsTypeDeclarations = operationsGroupedByHttpMethod.map<string>(
     (group) => {
       const httpMethod = group.groupKey;
 
-      const routes = group.map((x) => `'${x.pathName}'`).join(' | ');
+      const routes = group.map((x) => `'${x.pathName}'`).join(" | ");
 
       const routeType = `type ${getRouteTypeString(httpMethod)} = ${routes}\n`;
 
@@ -36,7 +36,7 @@ export function getHttpMethods(
 
             return `Type extends '${pathName}' ? ${functionParamsType}`;
           })
-          .join(' : ') + ' : null';
+          .join(" : ") + " : null";
 
       const paramType = `type ${getRouteParamTypeString(
         httpMethod,
@@ -54,7 +54,7 @@ export function getHttpMethods(
 
             return `Type extends '${pathName}' ? ${functionReturnType}`;
           })
-          .join(' : ') + ' : null';
+          .join(" : ") + " : null";
 
       const returnsType = `type ${getRouteReturnTypeString(
         httpMethod,
@@ -91,18 +91,18 @@ export function getHttpMethods(
       }
 
       return createCleanFile([
-        `${index > 0 ? 'else' : ''} ${
-          index === arr.length - 1 ? '' : `if (route === '${pathName}')`
+        `${index > 0 ? "else" : ""} ${
+          index === arr.length - 1 ? "" : `if (route === '${pathName}')`
         } {`,
         returnDeclaration,
-        '}',
+        "}",
       ]);
     });
 
     return createCleanFile([
       functionDefinitionStart,
       ...functionDefinitions,
-      '}',
+      "}",
     ]);
   });
 

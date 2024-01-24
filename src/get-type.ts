@@ -1,8 +1,8 @@
-import {createCleanFile} from '../utils/string';
-import {cleanGenericRefName} from './clean-generic-ref-name';
-import {CodegenOptions} from './codegen';
-import {ApiResponseBaseTypeMap, BaseTypeMap} from './map-base-type';
-import {Schema} from './utils';
+import {cleanGenericRefName} from "./clean-generic-ref-name";
+import {CodegenOptions} from "./codegen";
+import {ApiResponseBaseTypeMap, BaseTypeMap} from "./map-base-type";
+import {Schema} from "./utils";
+import {createCleanFile} from "./utils/string";
 
 type getTypeProps = {
   schema: Schema;
@@ -11,7 +11,7 @@ type getTypeProps = {
   ignoreRef?: boolean;
 };
 
-type getTypeOptions = Omit<CodegenOptions, 'baseTypeMap'> & {
+type getTypeOptions = Omit<CodegenOptions, "baseTypeMap"> & {
   baseTypeMap: BaseTypeMap;
 };
 
@@ -31,7 +31,7 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
     ignoreRef = false,
   } = props;
 
-  if (schema.type === 'object' && !getSchemaIsDictionary(schema)) {
+  if (schema.type === "object" && !getSchemaIsDictionary(schema)) {
     const objectProperties = schema.properties || {};
     const classProperties = Object.entries(objectProperties).map(
       ([propertyName, propertySchema]) => {
@@ -47,17 +47,17 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
           options,
         );
 
-        return `'${propertyName}'${optional ? '?' : ''}: ${propertyType};`;
+        return `'${propertyName}'${optional ? "?" : ""}: ${propertyType};`;
       },
     );
 
-    return createCleanFile(['{', ...classProperties, '}']);
+    return createCleanFile(["{", ...classProperties, "}"]);
   }
 
   if (schema.$ref) {
-    const refName = schema.$ref.replace('#/components/schemas/', '');
+    const refName = schema.$ref.replace("#/components/schemas/", "");
 
-    const refIsGeneric = refName.indexOf('<') > -1;
+    const refIsGeneric = refName.indexOf("<") > -1;
 
     if (ignoreRef || (!allowLiteralGenerics && refIsGeneric)) {
       const refSchema = swagger.components.schemas[refName];
@@ -74,36 +74,36 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
         options,
       );
 
-      return baseTypeMap['dictionary'].default.type(valueType);
+      return baseTypeMap["dictionary"].default.type(valueType);
     }
 
-    if (schema.type === 'array' && schema.items) {
+    if (schema.type === "array" && schema.items) {
       const innerType = getType(
         {...props, sourceRequired: true, schema: schema.items},
         options,
       );
 
-      return baseTypeMap['array'].default.type(innerType);
+      return baseTypeMap["array"].default.type(innerType);
     }
 
     if (!schema.type) {
-      return 'any';
+      return "any";
     }
 
     const baseType = baseTypeMap[schema.type];
 
     if (!baseType) {
-      return 'any';
+      return "any";
     }
 
     if (!schema.format) {
-      return baseType['default'].type;
+      return baseType["default"].type;
     }
 
     const formatType = baseType[schema.format];
 
     if (!formatType) {
-      return baseType['default'].type;
+      return baseType["default"].type;
     }
 
     return formatType.type;
@@ -112,11 +112,11 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
   let _type = getBasicType(schema);
 
   if (schema.nullable && schema.nullable) {
-    _type += ' | null';
+    _type += " | null";
   }
 
   if (includeUndefinedType && !sourceRequired) {
-    _type += ' | undefined';
+    _type += " | undefined";
   }
 
   return _type;
@@ -127,7 +127,7 @@ type getTypeAssignmentProps = {
   source: string;
   sourceRequired: boolean | undefined;
   sourceNullable: boolean | undefined;
-  typeMapping: 'response' | 'request';
+  typeMapping: "response" | "request";
 };
 
 export function getTypeAssignment(
@@ -139,22 +139,22 @@ export function getTypeAssignment(
   const {schema, source, typeMapping, sourceNullable, sourceRequired} = props;
 
   const typeSatisfies =
-    ' satisfies ' +
+    " satisfies " +
     getType(
       {schema, sourceRequired},
       {
         ...options,
         baseTypeMap:
-          typeMapping === 'request' ? ApiResponseBaseTypeMap : baseTypeMap,
+          typeMapping === "request" ? ApiResponseBaseTypeMap : baseTypeMap,
       },
     );
 
   const assignmentSafety = `${
-    !sourceRequired ? `${source} === undefined ? undefined : ` : ''
-  } ${sourceNullable ? `${source} === null ? null : ` : ''}`;
+    !sourceRequired ? `${source} === undefined ? undefined : ` : ""
+  } ${sourceNullable ? `${source} === null ? null : ` : ""}`;
 
   const converterType =
-    typeMapping === 'request' ? 'requestConverter' : 'responseConverter';
+    typeMapping === "request" ? "requestConverter" : "responseConverter";
 
   if (getSchemaIsDictionary(schema)) {
     const dictionaryProperties = baseTypeMap.dictionary.default[converterType](
@@ -178,7 +178,7 @@ export function getTypeAssignment(
     return assignmentSafety + dictionaryProperties;
   }
 
-  if (schema.type === 'object') {
+  if (schema.type === "object") {
     const objectProperties = schema.properties || {};
     const classProperties = Object.entries(objectProperties)
       .map(([propertyName, propertySchema]) => {
@@ -199,7 +199,7 @@ export function getTypeAssignment(
           options,
         )},`;
       })
-      .join('\n');
+      .join("\n");
 
     return (
       assignmentSafety +
@@ -210,19 +210,19 @@ export function getTypeAssignment(
   }
 
   if (schema.$ref) {
-    const cleanedRefName = schema.$ref.replace('#/components/schemas/', '');
+    const cleanedRefName = schema.$ref.replace("#/components/schemas/", "");
 
     const refSchema = swagger.components.schemas[cleanedRefName];
 
     return getTypeAssignment({...props, schema: refSchema, source}, options);
   }
 
-  if (schema.type === 'array' && schema.items) {
+  if (schema.type === "array" && schema.items) {
     const schemaItems = schema.items;
 
     return (
       assignmentSafety +
-      baseTypeMap['array'].default[converterType](source, (_source) => {
+      baseTypeMap["array"].default[converterType](source, (_source) => {
         return getTypeAssignment(
           {
             ...props,
@@ -238,7 +238,7 @@ export function getTypeAssignment(
   }
 
   const baseTypeAssignment =
-    baseTypeMap[schema.type]?.[schema.format ?? 'default']?.[converterType]?.(
+    baseTypeMap[schema.type]?.[schema.format ?? "default"]?.[converterType]?.(
       source,
     ) ?? `${source} /* unknown type map */`;
 

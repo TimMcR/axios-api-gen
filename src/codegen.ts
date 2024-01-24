@@ -1,24 +1,24 @@
-import {createCleanFile} from '../utils/string';
-import {generateApiClass} from './generate-api-class';
-import {generateBaseClasses} from './generate-base-class';
+import {generateApiClass} from "./generate-api-class";
+import {generateBaseClasses} from "./generate-base-class";
 import {
   BaseTypeAndConverterMap,
   DefaultBaseTypeAndConverterMap,
-} from './map-base-type';
-import {Operation, Swagger} from './utils';
-import {existsSync, mkdirSync, writeFileSync} from 'fs';
-import {format} from 'prettier';
-import {getReadmeSchemas} from './readme/get-readme-schemas';
-import {getReadmeServices} from './readme/get-readme-services';
-import {IRequestConfigDeclaration} from './helper-declarations/request-config';
-import {getFormDataFunctionDeclaration} from './helper-declarations/get-form-data';
-import {getConfigsDeclaration} from './helper-declarations/get-configs';
-import {getOperations} from './get-operations';
-import {GroupedArray} from '../utils/arrays';
-import {defineTagServices} from './define-tag-services';
+} from "./map-base-type";
+import {Operation, Swagger} from "./utils";
+import {existsSync, mkdirSync, writeFileSync} from "fs";
+import {format} from "prettier";
+import {getReadmeSchemas} from "./readme/get-readme-schemas";
+import {getReadmeServices} from "./readme/get-readme-services";
+import {IRequestConfigDeclaration} from "./helper-declarations/request-config";
+import {getFormDataFunctionDeclaration} from "./helper-declarations/get-form-data";
+import {getConfigsDeclaration} from "./helper-declarations/get-configs";
+import {getOperations} from "./get-operations";
+import {defineTagServices} from "./define-tag-services";
+import {GroupedArray} from "./utils/arrays";
+import {createCleanFile} from "./utils/string";
 
-type SchemaTypeDeclaration = 'class' | 'interface' | 'type';
-type MethodNameMode = 'operationId' | 'path';
+type SchemaTypeDeclaration = "class" | "interface" | "type";
+type MethodNameMode = "operationId" | "path";
 
 type UserCodegenOptions = {
   source: any;
@@ -66,16 +66,16 @@ export function codegen(options: UserCodegenOptions) {
   const {
     outputDirectory,
     baseTypeMap = DefaultBaseTypeAndConverterMap,
-    extraImports = '',
+    extraImports = "",
     allowLiteralGenerics = false,
     apiClassName = cleanApiTitle(swagger.info.title),
     createTagServices = true,
     notRequiredFieldsOptional = true,
-    serviceNameSuffix = 'Service',
-    schemaTypeDeclaration = 'interface',
+    serviceNameSuffix = "Service",
+    schemaTypeDeclaration = "interface",
     createReadMe = true,
     generateYupSchemas = true,
-    methodNameMode = 'operationId',
+    methodNameMode = "operationId",
     createMethodsForAllTags = true,
     generateHttpMethods = false,
   } = options;
@@ -116,7 +116,7 @@ export function codegen(options: UserCodegenOptions) {
     generatedString,
     axiosImports,
     extraImports,
-    '',
+    "",
     baseClasses,
     IRequestConfigDeclaration,
     getFormDataFunctionDeclaration,
@@ -128,9 +128,9 @@ export function codegen(options: UserCodegenOptions) {
   !existsSync(outputDirectory) && mkdirSync(outputDirectory);
 
   format(file, {
-    parser: 'typescript',
+    parser: "typescript",
   }).then((formattedFile) =>
-    writeFileSync(outputDirectory + '/index.defs.ts', formattedFile),
+    writeFileSync(outputDirectory + "/index.defs.ts", formattedFile),
   );
 
   if (!createReadMe) {
@@ -148,11 +148,11 @@ export function codegen(options: UserCodegenOptions) {
     schemas,
   ]);
 
-  writeFileSync(outputDirectory + '/readme.md', readMe);
+  writeFileSync(outputDirectory + "/readme.md", readMe);
 }
 
 function cleanApiTitle(title: string): string {
-  return title.replaceAll('.', '').replaceAll(' ', '');
+  return title.replaceAll(".", "").replaceAll(" ", "");
 }
 
 const generatedString = `/** Generate by custom swagger codegen */`;

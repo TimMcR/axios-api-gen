@@ -1,5 +1,5 @@
-import {createCleanFile} from '../utils/string';
-import {CodegenOptions} from './codegen';
+import {CodegenOptions} from "./codegen";
+import {createCleanFile} from "./utils/string";
 
 type getTagDocumentationProps = {
   tagName: string;
@@ -23,5 +23,5 @@ export function getTagDocumentation(
       ? undefined
       : ` * @docs ${tagSwagger.externalDocs}`;
 
-  return createCleanFile(['/**', tagDescription, tagDocs, '*/']);
+  return createCleanFile(["/**", tagDescription, tagDocs, "*/"]);
 }

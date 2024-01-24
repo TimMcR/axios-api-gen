@@ -1,7 +1,7 @@
-import {createCleanFile} from '../utils/string';
-import {cleanGenericRefName} from './clean-generic-ref-name';
-import {CodegenOptions} from './codegen';
-import {getType} from './get-type';
+import {cleanGenericRefName} from "./clean-generic-ref-name";
+import {CodegenOptions} from "./codegen";
+import {getType} from "./get-type";
+import {createCleanFile} from "./utils/string";
 
 export function generateBaseClasses(options: CodegenOptions): string {
   const {swagger, allowLiteralGenerics, schemaTypeDeclaration} = options;
@@ -11,7 +11,7 @@ export function generateBaseClasses(options: CodegenOptions): string {
   const schemas = Object.entries(componentSchema).reduce(
     (prev, [schemaName, schema]) => {
       //Skip generic classes
-      if (!allowLiteralGenerics && schemaName.indexOf('<') > -1) {
+      if (!allowLiteralGenerics && schemaName.indexOf("<") > -1) {
         return prev;
       }
 
@@ -27,7 +27,7 @@ export function generateBaseClasses(options: CodegenOptions): string {
 
       return prev.concat(
         `export ${schemaTypeDeclaration} ${className} ${
-          schemaTypeDeclaration === 'type' ? '=' : ''
+          schemaTypeDeclaration === "type" ? "=" : ""
         } ${classType}`,
       );
     },

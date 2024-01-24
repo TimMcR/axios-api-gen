@@ -1,13 +1,13 @@
-import {createCleanFile} from '../utils/string';
-import {CodegenOptions} from './codegen';
-import {getApiRequestInfo} from './get-api-request-info';
-import {getMethodFunctionName} from './get-method-function-name';
-import {getMethodDocumentation} from './get-method-documentation';
-import {getTagDocumentation} from './get-tag-documentation';
-import {getApiClassDocumentation} from './get-api-class-documentation';
-import {IRequestConfigString} from './helper-declarations/request-config';
-import {groupBy} from '../utils/arrays';
-import {getHttpMethods} from './get-http-methods';
+import {CodegenOptions} from "./codegen";
+import {getApiRequestInfo} from "./get-api-request-info";
+import {getMethodFunctionName} from "./get-method-function-name";
+import {getMethodDocumentation} from "./get-method-documentation";
+import {getTagDocumentation} from "./get-tag-documentation";
+import {getApiClassDocumentation} from "./get-api-class-documentation";
+import {IRequestConfigString} from "./helper-declarations/request-config";
+import {getHttpMethods} from "./get-http-methods";
+import {groupBy} from "./utils/arrays";
+import {createCleanFile} from "./utils/string";
 
 export function generateApiClass(options: CodegenOptions): string {
   const {apiClassName} = options;
@@ -97,7 +97,7 @@ function getMethodsGroupedByTag(options: CodegenOptions): string {
       );
 
       const functionParams = `params${
-        paramsOptional ? '?' : ''
+        paramsOptional ? "?" : ""
       }:${functionParamsType}`;
 
       const functionDefinition = `${operationName}: async (${functionParams}, options: AxiosRequestConfig = {}): Promise<${functionReturnType}> => ${functionReturn},`;
@@ -169,7 +169,7 @@ function getStandaloneMethods(
     methodCount++;
 
     const functionParams = `params${
-      paramsOptional ? '?' : ''
+      paramsOptional ? "?" : ""
     }:${functionParamsType}`;
 
     const operation = createCleanFile([
@@ -179,7 +179,7 @@ function getStandaloneMethods(
     ]);
 
     return prev.concat(operation);
-  }, '');
+  }, "");
 
   return {methods, methodCount};
 }

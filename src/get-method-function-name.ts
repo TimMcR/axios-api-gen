@@ -1,6 +1,6 @@
-import {capitalizeFirstChar, decapitalizeFirstChar} from '../utils/string';
-import {CodegenOptions} from './codegen';
-import {Method} from './utils';
+import {CodegenOptions} from "./codegen";
+import {Method} from "./utils";
+import {capitalizeFirstChar, decapitalizeFirstChar} from "./utils/string";
 
 type getMethodFunctionNameProps = {
   method: Method;
@@ -15,15 +15,15 @@ export function getMethodFunctionName(
   const {pathName, method, httpMethod} = props;
   const {methodNameMode} = options;
 
-  if (methodNameMode === 'path' || !method.operationId) {
+  if (methodNameMode === "path" || !method.operationId) {
     const cleanedPath = pathName
-      .replaceAll('{', '/')
-      .replaceAll('}', '/')
-      .replaceAll('-', '/')
-      .split('/')
+      .replaceAll("{", "/")
+      .replaceAll("}", "/")
+      .replaceAll("-", "/")
+      .split("/")
       .reduce((prev, curr) => {
         return prev.concat(capitalizeFirstChar(curr));
-      }, '');
+      }, "");
 
     return httpMethod + cleanedPath;
   }

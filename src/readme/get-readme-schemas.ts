@@ -1,6 +1,6 @@
-import {createCleanFile} from '../../utils/string';
-import {cleanGenericRefName} from '../clean-generic-ref-name';
-import {CodegenOptions} from '../codegen';
+import {cleanGenericRefName} from "../clean-generic-ref-name";
+import {CodegenOptions} from "../codegen";
+import {createCleanFile} from "../utils/string";
 
 export function getReadmeSchemas(options: CodegenOptions): string {
   const {swagger, allowLiteralGenerics} = options;
@@ -10,11 +10,11 @@ export function getReadmeSchemas(options: CodegenOptions): string {
   const schemaNames = Object.keys(componentSchema).reduce(
     (prev, schemaName, index) => {
       if (index === 0) {
-        prev.push('## Component Schemas');
+        prev.push("## Component Schemas");
       }
 
       //Skip generic classes
-      if (!allowLiteralGenerics && schemaName.indexOf('<') > -1) {
+      if (!allowLiteralGenerics && schemaName.indexOf("<") > -1) {
         return prev;
       }
 

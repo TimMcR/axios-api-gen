@@ -1,12 +1,12 @@
-import {createCleanFile} from '../../utils/string';
-import {CodegenOptions} from '../codegen';
+import {CodegenOptions} from "../codegen";
+import {createCleanFile} from "../utils/string";
 
 export function getReadmeServices(options: CodegenOptions): string {
   const {operationsGroupedByTag} = options;
 
   const services = operationsGroupedByTag.reduce((prev, curr, index) => {
     if (index === 0 && curr.groupKey) {
-      prev.push('## Services');
+      prev.push("## Services");
     }
 
     const httpMethods = curr.map(({httpMethod, pathName}) => {
@@ -14,7 +14,7 @@ export function getReadmeServices(options: CodegenOptions): string {
     });
 
     const serviceGrouping = createCleanFile([
-      curr.groupKey ? `#### ${curr.groupKey}` : '## Standalone Methods',
+      curr.groupKey ? `#### ${curr.groupKey}` : "## Standalone Methods",
       ...httpMethods,
     ]);
 

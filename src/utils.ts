@@ -8,6 +8,8 @@ export interface Swagger {
   tags?: Tag[];
 }
 
+const y = 12;
+
 interface Tag {
   name: string;
   description?: string;
@@ -27,17 +29,17 @@ export interface Operation {
   tag?: string;
 }
 
-export type ContentType = 'application/json' | 'multipart/form-data';
+export type ContentType = "application/json" | "multipart/form-data";
 
 export interface Content {
-  'application/json': {
+  "application/json": {
     schema: Schema;
   };
-  'multipart/form-data': {
+  "multipart/form-data": {
     schema: Schema;
     encoding: {
       file: {
-        style: 'form';
+        style: "form";
       };
     };
   };
@@ -59,36 +61,36 @@ export interface Method {
   operationId?: string;
   parameters?: Array<{
     name: string;
-    in: 'path' | 'query' | 'header';
+    in: "path" | "query" | "header";
     required?: boolean;
     schema: Schema;
     description?: string;
   }>;
   requestBody?: Requestbody;
   responses: {
-    '200': ApiResponse;
-    '201': ApiResponse;
+    "200": ApiResponse;
+    "201": ApiResponse;
   };
   summary?: string;
 }
 
 export type SchemaType =
-  | 'string'
-  | 'number'
-  | 'integer'
-  | 'boolean'
-  | 'array'
-  | 'object';
+  | "string"
+  | "number"
+  | "integer"
+  | "boolean"
+  | "array"
+  | "object";
 
 export type SchemaFormat =
-  | 'default'
-  | 'date'
-  | 'date-time'
-  | 'password'
-  | 'byte'
-  | 'binary'
-  | 'int32'
-  | 'double';
+  | "default"
+  | "date"
+  | "date-time"
+  | "password"
+  | "byte"
+  | "binary"
+  | "int32"
+  | "double";
 
 export interface Schema {
   type: SchemaType;
@@ -104,66 +106,13 @@ export interface Schema {
 
 export function getSchemaRefType(schema: Schema): string {
   if (!schema.$ref) {
-    return '';
+    return "";
   }
 
-  const refType = `${schema.$ref.replace('#/components/schemas/', '')}`;
+  const refType = `${schema.$ref.replace("#/components/schemas/", "")}`;
 
   // todo - replace this with base type mapping
-  const cleanedRefType = refType.replaceAll('Int32', 'number');
+  const cleanedRefType = refType.replaceAll("Int32", "number");
 
   return cleanedRefType;
-}
-
-interface Generics {
-  genericClassName: string;
-  genericTypeName: string;
-}
-
-export function extractGenerics(input: string): Generics[] {
-  const generics: string[] = [];
-
-  let currentGeneric = '';
-  let depth = 0;
-
-  for (const char of input) {
-    if (char === '<') {
-      if (depth > 0) {
-        currentGeneric += char;
-      }
-      depth++;
-    } else if (char === '>') {
-      depth--;
-      if (depth > 0) {
-        currentGeneric += char;
-      } else {
-        generics.push(currentGeneric);
-        currentGeneric = '';
-      }
-    } else if (char === ',' && depth === 1) {
-      generics.push(currentGeneric);
-      currentGeneric = '';
-    } else {
-      currentGeneric += char;
-    }
-  }
-
-  const baseType = input.split('<')[0].trim();
-
-  const genericReferences = generics.map<Generics>((generic, index) => ({
-    genericClassName: generic.replace(baseType, ''),
-    genericTypeName: `T${index + 1}`,
-  }));
-
-  return genericReferences;
-}
-
-export function getGenericClassName(input: string) {
-  const generics = extractGenerics(input);
-
-  const baseType = input.split('<')[0].trim();
-
-  const genericString = generics.map((x) => x.genericTypeName).join(', ');
-
-  return `${baseType}<${genericString}>`;
 }
