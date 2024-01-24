@@ -8,8 +8,6 @@ export interface Swagger {
   tags?: Tag[];
 }
 
-const y = 12;
-
 interface Tag {
   name: string;
   description?: string;
