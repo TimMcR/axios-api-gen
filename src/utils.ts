@@ -100,6 +100,7 @@ export interface Schema {
   pattern?: string;
   required?: string[];
   additionalProperties?: true | Schema;
+  description?: boolean;
 }
 
 export function getSchemaRefType(schema: Schema): string {

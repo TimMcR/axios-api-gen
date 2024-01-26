@@ -1,15 +1,23 @@
 /** Generate by custom swagger codegen */
 import { AxiosInstance, AxiosRequestConfig } from "axios";
 
+/**
+ * A user of the application
+ */
 export interface User {
   id?: undefined;
   username?: string;
 }
+
+/**
+ * A test post schema
+ */
 export interface Post {
   id?: undefined;
   title?: string;
   content?: string;
 }
+
 interface IRequestConfig {
   method?: any;
   headers?: any;
@@ -61,7 +69,7 @@ function getConfigs(
 }
 
 /**
-A sample API for testing purposes
+ * A sample API for testing purposes
  * @version `1.0.0`
  */
 export class SampleAPI {

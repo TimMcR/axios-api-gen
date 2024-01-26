@@ -1,5 +1,6 @@
 import {cleanGenericRefName} from "./clean-generic-ref-name";
 import {CodegenOptions} from "./codegen";
+import {getSchemaDocumentation} from "./documentation/get-schema-documentation";
 import {getType} from "./get-type";
 import {createCleanFile} from "./utils/string";
 
@@ -25,11 +26,17 @@ export function generateBaseClasses(options: CodegenOptions): string {
         options,
       );
 
-      return prev.concat(
+      const schemaDocumentation = getSchemaDocumentation(schema);
+
+      const baseClass = createCleanFile([
+        schemaDocumentation,
         `export ${schemaTypeDeclaration} ${className} ${
           schemaTypeDeclaration === "type" ? "=" : ""
         } ${classType}`,
-      );
+        "",
+      ]);
+
+      return prev.concat(baseClass);
     },
     [] as string[],
   );

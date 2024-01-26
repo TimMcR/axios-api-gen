@@ -1,6 +1,6 @@
-import {CodegenOptions} from "./codegen";
-import {Method} from "./utils";
-import {createCleanFile, decapitalizeFirstChar} from "./utils/string";
+import {CodegenOptions} from "../codegen";
+import {Method} from "../utils";
+import {createCleanFile, decapitalizeFirstChar} from "../utils/string";
 
 type getMethodDocumentation = {
   method: Method;
