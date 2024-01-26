@@ -5,7 +5,7 @@ import { AxiosInstance, AxiosRequestConfig } from "axios";
  * A user of the application
  */
 export interface User {
-  id?: undefined;
+  id?: number;
   username?: string;
 }
 
@@ -13,7 +13,7 @@ export interface User {
  * A test post schema
  */
 export interface Post {
-  id?: undefined;
+  id?: number;
   title?: string;
   content?: string;
 }
@@ -116,15 +116,13 @@ export class SampleAPI {
           configs,
           (
             data: Array<{
-              id?: undefined;
+              id?: number;
               username?: string;
             }>,
           ) => {
             let _data: Array<User> = data.map((x) => ({
-              id: (x["id"] === undefined
-                ? undefined
-                : x["id"]) /* unknown type map */ satisfies
-                | undefined
+              id: (x["id"] === undefined ? undefined : x["id"]) satisfies
+                | number
                 | undefined,
               username: (x["username"] === undefined
                 ? undefined
@@ -154,9 +152,7 @@ export class SampleAPI {
         configs.data = {
           id: (params.body["id"] === undefined
             ? undefined
-            : params.body["id"]) /* unknown type map */ satisfies
-            | undefined
-            | undefined,
+            : params.body["id"]) satisfies number | undefined,
           username: (params.body["username"] === undefined
             ? undefined
             : params.body["username"]) satisfies string | undefined,
@@ -164,12 +160,10 @@ export class SampleAPI {
 
         SampleAPI.callAxiosInstance(
           configs,
-          (data: { id?: undefined; username?: string }) => {
+          (data: { id?: number; username?: string }) => {
             let _data: User = {
-              id: (data["id"] === undefined
-                ? undefined
-                : data["id"]) /* unknown type map */ satisfies
-                | undefined
+              id: (data["id"] === undefined ? undefined : data["id"]) satisfies
+                | number
                 | undefined,
               username: (data["username"] === undefined
                 ? undefined
@@ -203,16 +197,14 @@ export class SampleAPI {
           configs,
           (
             data: Array<{
-              id?: undefined;
+              id?: number;
               title?: string;
               content?: string;
             }>,
           ) => {
             let _data: Array<Post> = data.map((x) => ({
-              id: (x["id"] === undefined
-                ? undefined
-                : x["id"]) /* unknown type map */ satisfies
-                | undefined
+              id: (x["id"] === undefined ? undefined : x["id"]) satisfies
+                | number
                 | undefined,
               title: (x["title"] === undefined
                 ? undefined
@@ -245,9 +237,7 @@ export class SampleAPI {
         configs.data = {
           id: (params.body["id"] === undefined
             ? undefined
-            : params.body["id"]) /* unknown type map */ satisfies
-            | undefined
-            | undefined,
+            : params.body["id"]) satisfies number | undefined,
           title: (params.body["title"] === undefined
             ? undefined
             : params.body["title"]) satisfies string | undefined,
@@ -258,12 +248,10 @@ export class SampleAPI {
 
         SampleAPI.callAxiosInstance(
           configs,
-          (data: { id?: undefined; title?: string; content?: string }) => {
+          (data: { id?: number; title?: string; content?: string }) => {
             let _data: Post = {
-              id: (data["id"] === undefined
-                ? undefined
-                : data["id"]) /* unknown type map */ satisfies
-                | undefined
+              id: (data["id"] === undefined ? undefined : data["id"]) satisfies
+                | number
                 | undefined,
               title: (data["title"] === undefined
                 ? undefined

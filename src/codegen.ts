@@ -32,7 +32,6 @@ type UserCodegenOptions = {
   allowLiteralGenerics?: boolean;
   schemaTypeDeclaration?: SchemaTypeDeclaration;
   createReadMe?: boolean;
-  generateYupSchemas?: boolean; // TODO
   methodNameMode?: MethodNameMode;
   createMethodsForAllTags?: boolean;
   generateHttpMethods?: boolean;
@@ -54,7 +53,6 @@ export type CodegenOptions = {
   allowLiteralGenerics: boolean;
   schemaTypeDeclaration: SchemaTypeDeclaration;
   createReadMe: boolean;
-  generateYupSchemas: boolean;
   methodNameMode: MethodNameMode;
   createMethodsForAllTags: boolean; // Puts the operation in all tag services in the tag array when true
   generateHttpMethods: boolean;
@@ -74,7 +72,6 @@ export function codegen(options: UserCodegenOptions) {
     serviceNameSuffix = "Service",
     schemaTypeDeclaration = "interface",
     createReadMe = true,
-    generateYupSchemas = true,
     methodNameMode = "operationId",
     createMethodsForAllTags = true,
     generateHttpMethods = false,
@@ -96,7 +93,6 @@ export function codegen(options: UserCodegenOptions) {
     swagger,
     schemaTypeDeclaration,
     createReadMe,
-    generateYupSchemas,
     methodNameMode,
     createMethodsForAllTags,
     operations,

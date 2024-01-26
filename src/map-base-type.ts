@@ -12,7 +12,7 @@ export interface BaseTypeAndConverterMap {
       responseConverter: (sourceReplaceString: string) => string;
       requestConverter: (sourceReplaceString: string) => string;
     };
-    'date-time': {
+    "date-time": {
       type: string;
       responseConverter: (sourceReplaceString: string) => string;
       requestConverter: (sourceReplaceString: string) => string;
@@ -39,6 +39,11 @@ export interface BaseTypeAndConverterMap {
     };
   };
   integer: {
+    default: {
+      type: string;
+      responseConverter: (sourceReplaceString: string) => string;
+      requestConverter: (sourceReplaceString: string) => string;
+    };
     int32: {
       type: string;
       responseConverter: (sourceReplaceString: string) => string;
@@ -46,6 +51,11 @@ export interface BaseTypeAndConverterMap {
     };
   };
   number: {
+    default: {
+      type: string;
+      responseConverter: (sourceReplaceString: string) => string;
+      requestConverter: (sourceReplaceString: string) => string;
+    };
     double: {
       type: string;
       responseConverter: (sourceReplaceString: string) => string;
@@ -95,7 +105,7 @@ export interface BaseTypeMap {
     date: {
       type: string;
     };
-    'date-time': {
+    "date-time": {
       type: string;
     };
     password: {
@@ -112,11 +122,17 @@ export interface BaseTypeMap {
     };
   };
   integer: {
+    default: {
+      type: string;
+    };
     int32: {
       type: string;
     };
   };
   number: {
+    default: {
+      type: string;
+    };
     double: {
       type: string;
     };
@@ -141,40 +157,46 @@ export interface BaseTypeMap {
 export const ApiResponseBaseTypeMap: BaseTypeMap = {
   string: {
     default: {
-      type: 'string',
+      type: "string",
     },
     date: {
-      type: 'string',
+      type: "string",
     },
-    'date-time': {
-      type: 'string',
+    "date-time": {
+      type: "string",
     },
     password: {
-      type: 'string',
+      type: "string",
     },
     byte: {
-      type: 'string',
+      type: "string",
     },
     binary: {
-      type: 'Blob',
+      type: "Blob",
     },
     uuid: {
-      type: 'string',
+      type: "string",
     },
   },
   integer: {
+    default: {
+      type: "number",
+    },
     int32: {
-      type: 'number',
+      type: "number",
     },
   },
   number: {
+    default: {
+      type: "number",
+    },
     double: {
-      type: 'number',
+      type: "number",
     },
   },
   boolean: {
     default: {
-      type: 'boolean',
+      type: "boolean",
     },
   },
   array: {
@@ -192,58 +214,68 @@ export const ApiResponseBaseTypeMap: BaseTypeMap = {
 export const DefaultBaseTypeAndConverterMap: BaseTypeAndConverterMap = {
   string: {
     default: {
-      type: 'string',
+      type: "string",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
     date: {
-      type: 'Date',
+      type: "Date",
       responseConverter: (s) => `new Date(${s})`, // new Date(s)
       requestConverter: (s) => `${s}.toISOString()`, // s.toISOString()
     },
-    'date-time': {
-      type: 'Date',
+    "date-time": {
+      type: "Date",
       responseConverter: (s) => `new Date(${s})`, // new Date(s)
       requestConverter: (s) => `${s}.toISOString()`, // s.toISOString()
     },
     password: {
-      type: 'string',
+      type: "string",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
     byte: {
-      type: 'string',
+      type: "string",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
     binary: {
-      type: 'Blob',
+      type: "Blob",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
     uuid: {
-      type: 'string',
+      type: "string",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
   },
   integer: {
+    default: {
+      type: "number",
+      responseConverter: (s) => s,
+      requestConverter: (s) => s,
+    },
     int32: {
-      type: 'number',
+      type: "number",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
   },
   number: {
+    default: {
+      type: "number",
+      responseConverter: (s) => s,
+      requestConverter: (s) => s,
+    },
     double: {
-      type: 'number',
+      type: "number",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
   },
   boolean: {
     default: {
-      type: 'boolean',
+      type: "boolean",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
@@ -251,8 +283,8 @@ export const DefaultBaseTypeAndConverterMap: BaseTypeAndConverterMap = {
   array: {
     default: {
       type: (t) => `Array<${t}>`,
-      responseConverter: (s, t) => `${s}.map(x => ${t('x')})`,
-      requestConverter: (s, t) => `${s}.map(x => ${t('x')})`,
+      responseConverter: (s, t) => `${s}.map(x => ${t("x")})`,
+      requestConverter: (s, t) => `${s}.map(x => ${t("x")})`,
     },
   },
   dictionary: {
@@ -260,13 +292,13 @@ export const DefaultBaseTypeAndConverterMap: BaseTypeAndConverterMap = {
       type: (t) => `Record<string, ${t}>`,
       responseConverter: (s, t) =>
         `Object.entries(${s}).reduce((prev, [key, val]) => {
-          prev[key] = ${t('val')};
+          prev[key] = ${t("val")};
 
           return prev;
         }, {})`,
       requestConverter: (s, t) =>
         `Object.entries(${s}).reduce((prev, [key, val]) => {
-          prev[key] = ${t('val')};
+          prev[key] = ${t("val")};
 
           return prev;
         }, {})`,

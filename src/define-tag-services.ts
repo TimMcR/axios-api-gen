@@ -1,5 +1,5 @@
 import {CodegenOptions} from "./codegen";
-import {getTagDocumentation} from "./get-tag-documentation";
+import {getTagDocumentation} from "./documentation/get-tag-documentation";
 import {createCleanFile} from "./utils/string";
 
 export function defineTagServices(options: CodegenOptions): string {

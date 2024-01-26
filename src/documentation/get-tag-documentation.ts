@@ -1,5 +1,5 @@
-import {CodegenOptions} from "./codegen";
-import {createCleanFile} from "./utils/string";
+import {CodegenOptions} from "../codegen";
+import {createCleanFile} from "../utils/string";
 
 type getTagDocumentationProps = {
   tagName: string;
