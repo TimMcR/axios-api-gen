@@ -1,4 +1,4 @@
-import {getOperations} from "../get-operations";
+import {getOperations} from "./get-operations";
 import {DefaultBaseTypeAndConverterMap} from "../type-mapping/map-base-type";
 import {Swagger} from "../swagger/types";
 import {CodegenOptions, UserCodegenOptions} from "./types";

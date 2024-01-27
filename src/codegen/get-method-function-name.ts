@@ -1,6 +1,6 @@
-import {CodegenOptions} from "./codegen/types";
-import {Method} from "./swagger/types";
-import {capitalizeFirstChar, decapitalizeFirstChar} from "./utils/string";
+import {CodegenOptions} from "./types";
+import {Method} from "../swagger/types";
+import {capitalizeFirstChar, decapitalizeFirstChar} from "../utils/string";
 
 type getMethodFunctionNameProps = {
   method: Method;

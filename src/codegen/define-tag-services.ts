@@ -1,6 +1,6 @@
-import {CodegenOptions} from "./codegen/types";
-import {getTagDocumentation} from "./documentation/get-tag-documentation";
-import {createCleanFile} from "./utils/string";
+import {CodegenOptions} from "./types";
+import {getTagDocumentation} from "../documentation/get-tag-documentation";
+import {createCleanFile} from "../utils/string";
 
 export function defineTagServices(options: CodegenOptions): string {
   const {

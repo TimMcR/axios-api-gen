@@ -1,6 +1,6 @@
-import {CodegenOptions} from "./codegen/types";
+import {CodegenOptions} from "./types";
 import {getApiRequestInfo} from "./get-api-request-info";
-import {createCleanFile} from "./utils/string";
+import {createCleanFile} from "../utils/string";
 
 type getHttpMethodsReturnType = {
   httpMethodsTypeDeclarations: string;

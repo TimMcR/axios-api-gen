@@ -1,8 +1,8 @@
-import {cleanGenericRefName} from "./clean-generic-ref-name";
-import {CodegenOptions} from "./codegen/types";
-import {getSchemaDocumentation} from "./documentation/get-schema-documentation";
-import {getType} from "./get-type";
-import {createCleanFile} from "./utils/string";
+import {cleanGenericRefName} from "../utils/clean-generic-ref-name";
+import {CodegenOptions} from "./types";
+import {getSchemaDocumentation} from "../documentation/get-schema-documentation";
+import {getType} from "../type-mapping/get-type";
+import {createCleanFile} from "../utils/string";
 
 export function generateBaseClasses(options: CodegenOptions): string {
   const {swagger, allowLiteralGenerics, schemaTypeDeclaration} = options;

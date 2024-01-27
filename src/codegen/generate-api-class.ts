@@ -1,13 +1,13 @@
 import {getApiRequestInfo} from "./get-api-request-info";
 import {getMethodFunctionName} from "./get-method-function-name";
-import {getMethodDocumentation} from "./documentation/get-method-documentation";
-import {getTagDocumentation} from "./documentation/get-tag-documentation";
-import {getApiClassDocumentation} from "./documentation/get-api-class-documentation";
-import {IRequestConfigString} from "./helper-declarations/request-config";
+import {getMethodDocumentation} from "../documentation/get-method-documentation";
+import {getTagDocumentation} from "../documentation/get-tag-documentation";
+import {getApiClassDocumentation} from "../documentation/get-api-class-documentation";
+import {IRequestConfigString} from "../helper-declarations/request-config";
 import {getHttpMethods} from "./get-http-methods";
-import {groupBy} from "./utils/arrays";
-import {createCleanFile} from "./utils/string";
-import {CodegenOptions} from "./codegen/types";
+import {groupBy} from "../utils/arrays";
+import {createCleanFile} from "../utils/string";
+import {CodegenOptions} from "./types";
 
 export function generateApiClass(options: CodegenOptions): string {
   const {apiClassName} = options;

@@ -1,4 +1,4 @@
-import {cleanGenericRefName} from "../clean-generic-ref-name";
+import {cleanGenericRefName} from "../utils/clean-generic-ref-name";
 import {CodegenOptions} from "../codegen/types";
 import {createCleanFile} from "../utils/string";
 

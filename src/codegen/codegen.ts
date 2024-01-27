@@ -1,11 +1,11 @@
-import {generateApiClass} from "../generate-api-class";
-import {generateBaseClasses} from "../generate-base-class";
+import {generateApiClass} from "./generate-api-class";
+import {generateBaseClasses} from "./generate-base-class";
 import {existsSync, mkdirSync, writeFileSync} from "fs";
 import {format} from "prettier";
 import {IRequestConfigDeclaration} from "../helper-declarations/request-config";
 import {getFormDataFunctionDeclaration} from "../helper-declarations/get-form-data";
 import {getConfigsDeclaration} from "../helper-declarations/get-configs";
-import {defineTagServices} from "../define-tag-services";
+import {defineTagServices} from "./define-tag-services";
 import {createCleanFile} from "../utils/string";
 import {UserCodegenOptions} from "./types";
 import {getCodegenOptions} from "./get-codegen-options";

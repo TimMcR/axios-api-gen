@@ -1,5 +1,5 @@
-import {Operation, Swagger} from "./swagger/types";
-import {GroupedArray, groupBy} from "./utils/arrays";
+import {Operation, Swagger} from "../swagger/types";
+import {GroupedArray, groupBy} from "../utils/arrays";
 
 type getOperationsProps = {
   swagger: Swagger;

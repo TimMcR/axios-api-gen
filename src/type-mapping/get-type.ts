@@ -1,11 +1,8 @@
-import {cleanGenericRefName} from "./clean-generic-ref-name";
-import {CodegenOptions} from "./codegen/types";
-import {
-  ApiResponseBaseTypeMap,
-  BaseTypeMap,
-} from "./type-mapping/map-base-type";
-import {Schema} from "./swagger/types";
-import {createCleanFile} from "./utils/string";
+import {cleanGenericRefName} from "../utils/clean-generic-ref-name";
+import {CodegenOptions} from "../codegen/types";
+import {ApiResponseBaseTypeMap, BaseTypeMap} from "./map-base-type";
+import {Schema} from "../swagger/types";
+import {createCleanFile} from "../utils/string";
 
 type getTypeProps = {
   schema: Schema;

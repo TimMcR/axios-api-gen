@@ -1,4 +1,4 @@
-import {ContentType, Method, Schema} from "./swagger/types";
+import {ContentType, Method, Schema} from "../swagger/types";
 
 type getRequestBodySchemaReturnType = {
   schema?: Schema;
