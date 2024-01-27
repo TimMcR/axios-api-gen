@@ -1,9 +1,10 @@
-import {cleanGenericRefName} from "../utils/clean-generic-ref-name";
+import {cleanGenericString} from "../utils/clean-generic-string";
 import {CodegenOptions} from "../codegen/types";
 import {BaseTypeMap} from "./map-base-type";
 import {Schema} from "../swagger/types";
 import {createCleanFile} from "../utils/string";
 import {getSchemaIsDictionary} from "./get-schema-is-dictionary";
+import {cleanRefName} from "../utils/clean-ref-name";
 
 type getTypeProps = {
   schema: Schema;
@@ -67,7 +68,7 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
   }
 
   if (schema.$ref) {
-    const refName = schema.$ref.replace("#/components/schemas/", "");
+    const refName = cleanRefName(schema.$ref);
 
     const refIsGeneric = refName.indexOf("<") > -1;
 
@@ -76,7 +77,7 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
       return getType({...props, schema: refSchema}, options);
     }
 
-    return cleanGenericRefName(refName);
+    return cleanGenericString(refName);
   }
 
   function getBasicType(schema: Schema): string {

@@ -1,4 +1,4 @@
-import {cleanGenericRefName} from "../utils/clean-generic-ref-name";
+import {cleanGenericString} from "../utils/clean-generic-string";
 import {CodegenOptions} from "../codegen/types";
 import {createCleanFile} from "../utils/string";
 
@@ -18,7 +18,7 @@ export function getReadmeSchemas(options: CodegenOptions): string {
         return prev;
       }
 
-      const className = cleanGenericRefName(schemaName);
+      const className = cleanGenericString(schemaName);
 
       return prev.concat(`#### ${className}`);
     },

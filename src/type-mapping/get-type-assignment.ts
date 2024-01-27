@@ -1,5 +1,6 @@
 import {CodegenOptions} from "../codegen/types";
 import {Schema} from "../swagger/types";
+import {cleanRefName} from "../utils/clean-ref-name";
 import {getSchemaIsDictionary} from "./get-schema-is-dictionary";
 import {getType} from "./get-type";
 import {ApiResponseBaseTypeMap} from "./map-base-type";
@@ -95,7 +96,7 @@ export function getTypeAssignment(
   }
 
   if (schema.$ref) {
-    const cleanedRefName = schema.$ref.replace("#/components/schemas/", "");
+    const cleanedRefName = cleanRefName(schema.$ref);
 
     const refSchema = swagger.components.schemas[cleanedRefName];
 

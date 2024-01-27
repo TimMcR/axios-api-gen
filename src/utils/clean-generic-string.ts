@@ -1,7 +1,6 @@
-export function cleanGenericRefName(schemaRef: string): string {
+export function cleanGenericString(schemaRef: string): string {
   return schemaRef
     .trim()
-    .replaceAll("#/components/schemas/", "")
     .replaceAll("<", "")
     .replaceAll(">", "")
     .replaceAll(",", "")
