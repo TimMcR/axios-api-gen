@@ -1,5 +1,5 @@
 import {BaseTypeAndConverterMap} from "../type-mapping/map-base-type";
-import {Operation, Swagger} from "../utils";
+import {Operation, Swagger} from "../swagger/types";
 import {GroupedArray} from "../utils/arrays";
 
 export type SchemaTypeDeclaration = "class" | "interface" | "type";

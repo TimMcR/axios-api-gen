@@ -4,7 +4,7 @@ import {getType, getTypeAssignment} from "./get-type";
 import {getConfigsFunctionName} from "./helper-declarations/get-configs";
 import {getFormDataFunctionName} from "./helper-declarations/get-form-data";
 import {ApiResponseBaseTypeMap} from "./type-mapping/map-base-type";
-import {Operation, Schema} from "./utils";
+import {Operation, Schema} from "./swagger/types";
 import {decapitalizeFirstChar} from "./utils/string";
 
 type getApiRequestInfoProps = {

@@ -1,5 +1,5 @@
 import {CodegenOptions} from "../codegen/types";
-import {Method} from "../utils";
+import {Method} from "../swagger/types";
 import {createCleanFile, decapitalizeFirstChar} from "../utils/string";
 
 type getMethodDocumentation = {

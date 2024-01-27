@@ -1,4 +1,4 @@
-import {Schema} from "../utils";
+import {Schema} from "../swagger/types";
 import {createCleanFile} from "../utils/string";
 
 export function getSchemaDocumentation(schema: Schema) {

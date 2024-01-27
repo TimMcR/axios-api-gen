@@ -8,7 +8,7 @@ export interface Swagger {
   tags?: Tag[];
 }
 
-interface Tag {
+export interface Tag {
   name: string;
   description?: string;
   externalDocs?: string;

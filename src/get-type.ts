@@ -4,7 +4,7 @@ import {
   ApiResponseBaseTypeMap,
   BaseTypeMap,
 } from "./type-mapping/map-base-type";
-import {Schema} from "./utils";
+import {Schema} from "./swagger/types";
 import {createCleanFile} from "./utils/string";
 
 type getTypeProps = {
