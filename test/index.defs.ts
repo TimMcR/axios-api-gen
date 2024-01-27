@@ -26,7 +26,9 @@ interface IRequestConfig {
   params?: any;
 }
 
-/* Helper Method for getting form data from request body */
+/**
+ * Helper Method for getting form data from request body
+ */
 /* eslint-disable */
 function getFormData(data: any = {}): FormData {
   const formData = new FormData();
@@ -48,7 +50,9 @@ function getFormData(data: any = {}): FormData {
   return formData;
 }
 
-/* Helper method for getting axios configs*/
+/**
+ * Helper method for getting axios configs
+ */
 /* eslint-disable */
 function getConfigs(
   method: string,
@@ -81,8 +85,6 @@ export class SampleAPI {
     reject: (p: any) => void,
   ): Promise<any> {
     if (!SampleAPI.Axios) {
-      //TODO: throw custom error
-      //throw new Error('SampleAPI needs injected axios instance');
       throw "SampleAPI needs injected axios instance";
     }
 

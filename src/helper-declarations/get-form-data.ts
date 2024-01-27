@@ -1,7 +1,9 @@
-export const getFormDataFunctionName = 'getFormData';
+export const getFormDataFunctionName = "getFormData";
 
 export const getFormDataFunctionDeclaration = `
-/* Helper Method for getting form data from request body */
+/**
+ * Helper Method for getting form data from request body
+ */
 /* eslint-disable */
 function ${getFormDataFunctionName}(data: any = {}): FormData {
   const formData = new FormData();

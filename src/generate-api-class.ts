@@ -33,8 +33,6 @@ export function generateApiClass(options: CodegenOptions): string {
     reject: (p: any) => void,
   ): Promise<any> {
     if (!${apiClassName}.Axios) {
-        //TODO: throw custom error
-      //throw new Error('${apiClassName} needs injected axios instance');
       throw '${apiClassName} needs injected axios instance'
     }
 
