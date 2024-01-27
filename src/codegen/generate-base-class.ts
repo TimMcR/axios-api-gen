@@ -3,7 +3,6 @@ import {CodegenOptions} from "./types";
 import {getSchemaDocumentation} from "../documentation/get-schema-documentation";
 import {getType} from "../type-mapping/get-type";
 import {createCleanFile} from "../utils/string";
-import {cleanRefName} from "../utils/clean-ref-name";
 
 export function generateBaseClasses(options: CodegenOptions): string {
   const {swagger, allowLiteralGenerics, schemaTypeDeclaration} = options;
@@ -12,14 +11,12 @@ export function generateBaseClasses(options: CodegenOptions): string {
 
   const schemas = Object.entries(componentSchema).reduce(
     (prev, [schemaName, schema]) => {
-      const refName = cleanRefName(schemaName);
-
       //Skip generic classes
-      if (!allowLiteralGenerics && refName.indexOf("<") > -1) {
+      if (!allowLiteralGenerics && schemaName.indexOf("<") > -1) {
         return prev;
       }
 
-      const className = cleanGenericString(refName);
+      const className = cleanGenericString(schemaName);
 
       const classType = getType(
         {
