@@ -1,4 +1,3 @@
-import {CodegenOptions} from "../codegen/types";
 import {Method} from "../swagger/types";
 import {createCleanFile, decapitalizeFirstChar} from "../utils/string";
 
@@ -7,10 +6,7 @@ type getMethodDocumentation = {
   pathName: string;
 };
 
-export function getMethodDocumentation(
-  props: getMethodDocumentation,
-  options: CodegenOptions,
-): string {
+export function getMethodDocumentation(props: getMethodDocumentation): string {
   const {method, pathName} = props;
 
   const paramSummaries = getParameterSummaries(method);

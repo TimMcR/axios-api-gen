@@ -1,11 +1,12 @@
 import {CodegenOptions} from "./types";
 import {getRequestBodySchema} from "./get-request-body-schema";
-import {getType, getTypeAssignment} from "../type-mapping/get-type";
+import {getType} from "../type-mapping/get-type";
 import {getConfigsFunctionName} from "../helper-declarations/get-configs";
 import {getFormDataFunctionName} from "../helper-declarations/get-form-data";
 import {ApiResponseBaseTypeMap} from "../type-mapping/map-base-type";
 import {Operation, Schema} from "../swagger/types";
 import {decapitalizeFirstChar} from "../utils/string";
+import {getTypeAssignment} from "../type-mapping/get-type-assignment";
 
 type getApiRequestInfoProps = {
   operation: Operation;

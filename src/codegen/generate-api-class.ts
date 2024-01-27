@@ -86,13 +86,10 @@ function getMethodsGroupedByTag(options: CodegenOptions): string {
         options,
       );
 
-      const documentation = getMethodDocumentation(
-        {
-          method,
-          pathName,
-        },
-        options,
-      );
+      const documentation = getMethodDocumentation({
+        method,
+        pathName,
+      });
 
       const functionParams = `params${
         paramsOptional ? "?" : ""
@@ -156,13 +153,10 @@ function getStandaloneMethods(
       options,
     );
 
-    const documentation = getMethodDocumentation(
-      {
-        method,
-        pathName,
-      },
-      options,
-    );
+    const documentation = getMethodDocumentation({
+      method,
+      pathName,
+    });
 
     methodCount++;
 
