@@ -1,4 +1,4 @@
-import {CodegenOptions} from "../codegen/codegen";
+import {CodegenOptions} from "../codegen/types";
 import {createCleanFile} from "../utils/string";
 
 export function getReadmeServices(options: CodegenOptions): string {

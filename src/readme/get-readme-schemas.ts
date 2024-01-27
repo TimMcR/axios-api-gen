@@ -1,5 +1,5 @@
 import {cleanGenericRefName} from "../clean-generic-ref-name";
-import {CodegenOptions} from "../codegen/codegen";
+import {CodegenOptions} from "../codegen/types";
 import {createCleanFile} from "../utils/string";
 
 export function getReadmeSchemas(options: CodegenOptions): string {
