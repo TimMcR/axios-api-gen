@@ -1,4 +1,4 @@
-import {CodegenOptions} from "./codegen";
+import {CodegenOptions} from "./codegen/types";
 import {getTagDocumentation} from "./documentation/get-tag-documentation";
 import {createCleanFile} from "./utils/string";
 

@@ -1,5 +1,5 @@
 import {cleanGenericRefName} from "./clean-generic-ref-name";
-import {CodegenOptions} from "./codegen";
+import {CodegenOptions} from "./codegen/types";
 import {getSchemaDocumentation} from "./documentation/get-schema-documentation";
 import {getType} from "./get-type";
 import {createCleanFile} from "./utils/string";

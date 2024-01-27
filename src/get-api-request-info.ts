@@ -1,9 +1,9 @@
-import {CodegenOptions} from "./codegen";
+import {CodegenOptions} from "./codegen/types";
 import {getRequestBodySchema} from "./get-request-body-schema";
 import {getType, getTypeAssignment} from "./get-type";
 import {getConfigsFunctionName} from "./helper-declarations/get-configs";
 import {getFormDataFunctionName} from "./helper-declarations/get-form-data";
-import {ApiResponseBaseTypeMap} from "./map-base-type";
+import {ApiResponseBaseTypeMap} from "./type-mapping/map-base-type";
 import {Operation, Schema} from "./utils";
 import {decapitalizeFirstChar} from "./utils/string";
 

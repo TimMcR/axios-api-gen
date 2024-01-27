@@ -44,7 +44,7 @@ export interface Content {
 }
 
 export interface ApiResponse {
-  description: string;
+  description?: string;
   content: Content;
 }
 
@@ -101,17 +101,4 @@ export interface Schema {
   required?: string[];
   additionalProperties?: true | Schema;
   description?: boolean;
-}
-
-export function getSchemaRefType(schema: Schema): string {
-  if (!schema.$ref) {
-    return "";
-  }
-
-  const refType = `${schema.$ref.replace("#/components/schemas/", "")}`;
-
-  // todo - replace this with base type mapping
-  const cleanedRefType = refType.replaceAll("Int32", "number");
-
-  return cleanedRefType;
 }

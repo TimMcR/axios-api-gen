@@ -1,4 +1,4 @@
-import {CodegenOptions} from "../codegen";
+import {CodegenOptions} from "../codegen/types";
 import {Method} from "../utils";
 import {createCleanFile, decapitalizeFirstChar} from "../utils/string";
 
