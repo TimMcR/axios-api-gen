@@ -87,7 +87,7 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
         options,
       );
 
-      return baseTypeMap["array"].default.type(innerType);
+      return baseTypeMap.array.default.type(innerType);
     }
 
     if (!schema.type) {

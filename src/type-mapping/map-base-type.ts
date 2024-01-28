@@ -1,100 +1,55 @@
+import {LooseAutoComplete} from "../utils/types";
+
+type KnownStringFormats =
+  | "date"
+  | "date-time"
+  | "password"
+  | "byte"
+  | "binary"
+  | "uuid";
+
+type KnownIntegerFormats = "int32";
+
+type KnownNumberFormats = "double";
+
+/**
+ * Type maps that does not rely on a source type
+ */
+type BasicTypeMap<TFormats extends string = "default"> = Record<
+  LooseAutoComplete<TFormats | "default">,
+  {
+    type: string;
+    responseConverter: (sourceReplaceString: string) => string;
+    requestConverter: (sourceReplaceString: string) => string;
+  }
+>;
+
+/**
+ * Type maps that rely on a source type
+ */
+type AdvancedTypeMap = Record<
+  LooseAutoComplete<"default">,
+  {
+    type: (typeReplaceString: string) => string;
+    responseConverter: (
+      sourceReplaceString: string,
+      typeResponseConverter: (typeReplaceString: string) => string,
+    ) => string;
+    requestConverter: (
+      sourceReplaceString: string,
+      typeResponseConverter: (typeReplaceString: string) => string,
+    ) => string;
+  }
+>;
+
 export interface BaseTypeAndConverterMap {
-  string: {
-    default: {
-      type: string;
-      // How items of this base type are converted after they are received from the server
-      responseConverter: (sourceReplaceString: string) => string;
-      // How items of this base type are converted before they are sent to the server
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    date: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    "date-time": {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    password: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    byte: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    binary: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    uuid: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-  };
-  integer: {
-    default: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    int32: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-  };
-  number: {
-    default: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-    double: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-  };
-  boolean: {
-    default: {
-      type: string;
-      responseConverter: (sourceReplaceString: string) => string;
-      requestConverter: (sourceReplaceString: string) => string;
-    };
-  };
-  array: {
-    default: {
-      type: (typeReplaceString: string) => string;
-      responseConverter: (
-        sourceReplaceString: string,
-        typeResponseConverter: (typeReplaceString: string) => string,
-      ) => string;
-      requestConverter: (
-        sourceReplaceString: string,
-        typeResponseConverter: (typeReplaceString: string) => string,
-      ) => string;
-    };
-  };
-  dictionary: {
-    default: {
-      type: (typeReplaceString: string) => string;
-      responseConverter: (
-        sourceReplaceString: string,
-        typeResponseConverter: (typeReplaceString: string) => string,
-      ) => string;
-      requestConverter: (
-        sourceReplaceString: string,
-        typeResponseConverter: (typeReplaceString: string) => string,
-      ) => string;
-    };
-  };
+  unknown: BasicTypeMap;
+  string: BasicTypeMap<KnownStringFormats>;
+  integer: BasicTypeMap<KnownIntegerFormats>;
+  number: BasicTypeMap<KnownNumberFormats>;
+  boolean: BasicTypeMap;
+  array: AdvancedTypeMap;
+  dictionary: AdvancedTypeMap;
 }
 
 export interface BaseTypeMap {
@@ -302,6 +257,13 @@ export const DefaultBaseTypeAndConverterMap: BaseTypeAndConverterMap = {
 
           return prev;
         }, {})`,
+    },
+  },
+  unknown: {
+    default: {
+      type: "any",
+      responseConverter: (s) => s,
+      requestConverter: (s) => s,
     },
   },
 };
