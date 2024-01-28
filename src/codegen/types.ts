@@ -1,4 +1,4 @@
-import {BaseTypeAndConverterMap} from "../type-mapping/map-base-type";
+import {BaseTypeMap} from "../type-mapping/map-base-type";
 import {Operation, Swagger} from "../swagger/types";
 import {GroupedArray} from "../utils/arrays";
 
@@ -12,7 +12,7 @@ export interface UserCodegenOptions {
   createTagServices?: boolean;
   serviceNameSuffix?: string;
   apiClassName?: string;
-  baseTypeMap?: BaseTypeAndConverterMap;
+  baseTypeMap?: BaseTypeMap;
   extraImports?: string;
   notRequiredFieldsOptional?: boolean;
   allowLiteralGenerics?: boolean;
@@ -34,7 +34,7 @@ export interface CodegenOptions {
   createTagServices: boolean;
   serviceNameSuffix: string;
   apiClassName: string;
-  baseTypeMap: BaseTypeAndConverterMap;
+  baseTypeMap: Required<BaseTypeMap>;
   notRequiredFieldsOptional: boolean;
   allowLiteralGenerics: boolean;
   schemaTypeDeclaration: SchemaTypeDeclaration;

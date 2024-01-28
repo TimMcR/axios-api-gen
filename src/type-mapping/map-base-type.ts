@@ -1,4 +1,8 @@
-import {LooseAutoComplete} from "../utils/types";
+import {
+  DeepPartial,
+  LooseAutoComplete,
+  mergeWithDefaults,
+} from "../utils/types";
 
 type KnownStringFormats =
   | "date"
@@ -42,8 +46,7 @@ type AdvancedTypeMap = Record<
   }
 >;
 
-export interface BaseTypeAndConverterMap {
-  unknown: BasicTypeMap;
+export interface BaseTypeMap {
   string: BasicTypeMap<KnownStringFormats>;
   integer: BasicTypeMap<KnownIntegerFormats>;
   number: BasicTypeMap<KnownNumberFormats>;
@@ -52,121 +55,7 @@ export interface BaseTypeAndConverterMap {
   dictionary: AdvancedTypeMap;
 }
 
-export interface BaseTypeMap {
-  string: {
-    default: {
-      type: string;
-    };
-    date: {
-      type: string;
-    };
-    "date-time": {
-      type: string;
-    };
-    password: {
-      type: string;
-    };
-    byte: {
-      type: string;
-    };
-    binary: {
-      type: string;
-    };
-    uuid: {
-      type: string;
-    };
-  };
-  integer: {
-    default: {
-      type: string;
-    };
-    int32: {
-      type: string;
-    };
-  };
-  number: {
-    default: {
-      type: string;
-    };
-    double: {
-      type: string;
-    };
-  };
-  boolean: {
-    default: {
-      type: string;
-    };
-  };
-  array: {
-    default: {
-      type: (typeReplaceString: string) => string;
-    };
-  };
-  dictionary: {
-    default: {
-      type: (typeReplaceString: string) => string;
-    };
-  };
-}
-
-export const ApiResponseBaseTypeMap: BaseTypeMap = {
-  string: {
-    default: {
-      type: "string",
-    },
-    date: {
-      type: "string",
-    },
-    "date-time": {
-      type: "string",
-    },
-    password: {
-      type: "string",
-    },
-    byte: {
-      type: "string",
-    },
-    binary: {
-      type: "Blob",
-    },
-    uuid: {
-      type: "string",
-    },
-  },
-  integer: {
-    default: {
-      type: "number",
-    },
-    int32: {
-      type: "number",
-    },
-  },
-  number: {
-    default: {
-      type: "number",
-    },
-    double: {
-      type: "number",
-    },
-  },
-  boolean: {
-    default: {
-      type: "boolean",
-    },
-  },
-  array: {
-    default: {
-      type: (t) => `Array<${t}>`,
-    },
-  },
-  dictionary: {
-    default: {
-      type: (t) => `Record<string, ${t}>`,
-    },
-  },
-};
-
-export const DefaultBaseTypeAndConverterMap: BaseTypeAndConverterMap = {
+export const DefaultBaseTypeMap: Required<BaseTypeMap> = {
   string: {
     default: {
       type: "string",
@@ -259,11 +148,73 @@ export const DefaultBaseTypeAndConverterMap: BaseTypeAndConverterMap = {
         }, {})`,
     },
   },
-  unknown: {
+  // unknown: {
+  //   default: {
+  //     type: "any",
+  //     responseConverter: (s) => s,
+  //     requestConverter: (s) => s,
+  //   },
+  // },
+};
+
+const _ApiResponseBaseTypeMap: DeepPartial<BaseTypeMap> = {
+  string: {
     default: {
-      type: "any",
-      responseConverter: (s) => s,
-      requestConverter: (s) => s,
+      type: "string",
+    },
+    date: {
+      type: "string",
+    },
+    "date-time": {
+      type: "string",
+    },
+    password: {
+      type: "string",
+    },
+    byte: {
+      type: "string",
+    },
+    binary: {
+      type: "Blob",
+    },
+    uuid: {
+      type: "string",
+    },
+  },
+  integer: {
+    default: {
+      type: "number",
+    },
+    int32: {
+      type: "number",
+    },
+  },
+  number: {
+    default: {
+      type: "number",
+    },
+    double: {
+      type: "number",
+    },
+  },
+  boolean: {
+    default: {
+      type: "boolean",
+    },
+  },
+  array: {
+    default: {
+      type: (t) => `Array<${t}>`,
+    },
+  },
+  dictionary: {
+    default: {
+      type: (t) => `Record<string, ${t}>`,
     },
   },
 };
+
+export const ApiResponseBaseTypeMap = mergeWithDefaults<BaseTypeMap>(
+  _ApiResponseBaseTypeMap,
+  DefaultBaseTypeMap,
+);

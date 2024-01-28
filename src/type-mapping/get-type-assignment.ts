@@ -126,6 +126,7 @@ export function getTypeAssignment(
   const baseTypeAssignment =
     baseTypeMap[schema.type]?.[schema.format ?? "default"]?.[converterType]?.(
       source,
+      () => "",
     ) ?? `${source} /* unknown type map */`;
 
   return `(${assignmentSafety} ${baseTypeAssignment})` + typeSatisfies;
