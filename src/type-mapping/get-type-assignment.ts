@@ -75,7 +75,7 @@ export function getTypeAssignment(
 
         const _source = `${source}['${propertyName}']`;
 
-        return `${propertyName}:  ${getTypeAssignment(
+        const propertyAssignment = getTypeAssignment(
           {
             typeMapping,
             schema: propertySchema,
@@ -84,7 +84,9 @@ export function getTypeAssignment(
             sourceNullable: isNullable,
           },
           options,
-        )},`;
+        );
+
+        return `${propertyName}: ${propertyAssignment},`;
       })
       .join("\n");
 
