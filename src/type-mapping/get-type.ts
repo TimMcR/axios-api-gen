@@ -1,6 +1,6 @@
 import {cleanGenericString} from "../utils/clean-generic-string";
 import {CodegenOptions} from "../codegen/types";
-import {BaseTypeMap} from "./map-base-type";
+import {BaseTypeMap} from "./base-type-map";
 import {Schema} from "../swagger/types";
 import {createCleanFile} from "../utils/string";
 import {getSchemaIsDictionary} from "./get-schema-is-dictionary";

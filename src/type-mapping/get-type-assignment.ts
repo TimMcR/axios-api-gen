@@ -3,7 +3,8 @@ import {Schema} from "../swagger/types";
 import {cleanRefName} from "../utils/clean-ref-name";
 import {getSchemaIsDictionary} from "./get-schema-is-dictionary";
 import {getType} from "./get-type";
-import {ApiResponseBaseTypeMap} from "./map-base-type";
+import {ApiResponseBaseTypeMap} from "./base-type-map";
+import {getBasicTypeMap} from "./get-basic-type-map";
 
 type getTypeAssignmentProps = {
   schema: Schema;
@@ -108,7 +109,7 @@ export function getTypeAssignment(
 
     return (
       assignmentSafety +
-      baseTypeMap["array"].default[converterType](source, (_source) => {
+      baseTypeMap.array.default[converterType](source, (_source) => {
         return getTypeAssignment(
           {
             ...props,
@@ -123,11 +124,9 @@ export function getTypeAssignment(
     );
   }
 
-  const baseTypeAssignment =
-    baseTypeMap[schema.type]?.[schema.format ?? "default"]?.[converterType]?.(
-      source,
-      () => "",
-    ) ?? `${source} /* unknown type map */`;
+  const typeMap = getBasicTypeMap(schema, options);
+
+  const baseTypeAssignment = typeMap[converterType](source);
 
   return `(${assignmentSafety} ${baseTypeAssignment})` + typeSatisfies;
 }

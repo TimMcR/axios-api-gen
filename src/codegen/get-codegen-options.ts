@@ -1,13 +1,12 @@
 import {getOperations} from "./get-operations";
-import {DefaultBaseTypeMap} from "../type-mapping/map-base-type";
 import {Swagger} from "../swagger/types";
 import {CodegenOptions, UserCodegenOptions} from "./types";
+import {getTypeConfig} from "../type-mapping/type-config";
 
 export function getCodegenOptions(options: UserCodegenOptions): CodegenOptions {
   const swagger = options.source as Swagger;
 
   const {
-    baseTypeMap = DefaultBaseTypeMap,
     allowLiteralGenerics = false,
     apiClassName = cleanApiTitle(swagger.info.title),
     createTagServices = true,
@@ -20,6 +19,8 @@ export function getCodegenOptions(options: UserCodegenOptions): CodegenOptions {
     generateHttpMethods = false,
   } = options;
 
+  const typeConfig = getTypeConfig(options);
+
   const {operations, operationsGroupedByTag, operationsGroupedByHttpMethod} =
     getOperations({
       createMethodsForAllTags,
@@ -29,7 +30,6 @@ export function getCodegenOptions(options: UserCodegenOptions): CodegenOptions {
   return {
     allowLiteralGenerics,
     apiClassName,
-    baseTypeMap,
     createTagServices,
     notRequiredFieldsOptional,
     serviceNameSuffix,
@@ -42,6 +42,7 @@ export function getCodegenOptions(options: UserCodegenOptions): CodegenOptions {
     operationsGroupedByTag,
     operationsGroupedByHttpMethod,
     generateHttpMethods,
+    ...typeConfig,
   };
 
   // TODO - validate swagger source

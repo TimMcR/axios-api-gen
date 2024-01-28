@@ -1,3 +1,6 @@
+import {BaseTypeMap} from "../type-mapping/base-type-map";
+import {LooseAutoComplete} from "../utils/types";
+
 export interface Swagger {
   openapi: string;
   info: Info;
@@ -72,31 +75,47 @@ export interface Method {
   summary?: string;
 }
 
-export type SchemaType =
-  | "string"
-  | "number"
-  | "integer"
-  | "boolean"
-  | "array"
-  | "object";
+export const KnownSchemaType = {
+  string: "string",
+  number: "number",
+  integer: "integer",
+  boolean: "boolean",
+  array: "array",
+  object: "object",
+};
+export type KnownSchemaType = keyof typeof KnownSchemaType;
 
-export type SchemaFormat =
-  | "default"
-  | "date"
-  | "date-time"
-  | "password"
-  | "byte"
-  | "binary"
-  | "int32"
-  | "double";
+export function isKnownSchemaType(
+  type: LooseAutoComplete<KnownSchemaType>,
+): type is keyof BaseTypeMap {
+  return Object.keys(KnownSchemaType).some((key) => key === type);
+}
+
+export const KnownSchemaFormat = {
+  default: "default",
+  date: "date",
+  "date-time": "date-time",
+  password: "password",
+  byte: "byte",
+  binary: "binary",
+  int32: "int32",
+  double: "double",
+};
+export type KnownSchemaFormat = keyof typeof KnownSchemaFormat;
+
+export function isKnownSchemaFormat(
+  type: LooseAutoComplete<KnownSchemaFormat>,
+): type is KnownSchemaFormat {
+  return Object.keys(KnownSchemaFormat).some((key) => key === type);
+}
 
 export interface Schema {
-  type: SchemaType;
+  type?: LooseAutoComplete<KnownSchemaType>;
+  format?: LooseAutoComplete<KnownSchemaFormat>;
   properties?: Record<string, Schema>;
   items?: Schema;
   $ref?: string;
   nullable?: boolean;
-  format?: SchemaFormat;
   pattern?: string;
   required?: string[];
   additionalProperties?: true | Schema;

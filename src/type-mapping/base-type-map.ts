@@ -16,43 +16,48 @@ type KnownIntegerFormats = "int32";
 
 type KnownNumberFormats = "double";
 
+export type BasicTypeAndConverter = {
+  type: string;
+  responseConverter: (sourceReplaceString: string) => string;
+  requestConverter: (sourceReplaceString: string) => string;
+};
+
 /**
  * Type maps that does not rely on a source type
  */
-type BasicTypeMap<TFormats extends string = "default"> = Record<
+export type BasicTypeMapping<TFormats extends string = "default"> = Record<
   LooseAutoComplete<TFormats | "default">,
-  {
-    type: string;
-    responseConverter: (sourceReplaceString: string) => string;
-    requestConverter: (sourceReplaceString: string) => string;
-  }
+  BasicTypeAndConverter
 >;
+
+export type AdvancedTypeAndConverter = {
+  type: (typeReplaceString: string) => string;
+  responseConverter: (
+    sourceReplaceString: string,
+    typeResponseConverter: (typeReplaceString: string) => string,
+  ) => string;
+  requestConverter: (
+    sourceReplaceString: string,
+    typeResponseConverter: (typeReplaceString: string) => string,
+  ) => string;
+};
 
 /**
  * Type maps that rely on a source type
  */
-type AdvancedTypeMap = Record<
+export type AdvancedTypeMapping = Record<
   LooseAutoComplete<"default">,
-  {
-    type: (typeReplaceString: string) => string;
-    responseConverter: (
-      sourceReplaceString: string,
-      typeResponseConverter: (typeReplaceString: string) => string,
-    ) => string;
-    requestConverter: (
-      sourceReplaceString: string,
-      typeResponseConverter: (typeReplaceString: string) => string,
-    ) => string;
-  }
+  AdvancedTypeAndConverter
 >;
 
 export interface BaseTypeMap {
-  string: BasicTypeMap<KnownStringFormats>;
-  integer: BasicTypeMap<KnownIntegerFormats>;
-  number: BasicTypeMap<KnownNumberFormats>;
-  boolean: BasicTypeMap;
-  array: AdvancedTypeMap;
-  dictionary: AdvancedTypeMap;
+  string: BasicTypeMapping<KnownStringFormats>;
+  integer: BasicTypeMapping<KnownIntegerFormats>;
+  number: BasicTypeMapping<KnownNumberFormats>;
+  boolean: BasicTypeMapping;
+
+  array: AdvancedTypeMapping;
+  dictionary: AdvancedTypeMapping;
 }
 
 export const DefaultBaseTypeMap: Required<BaseTypeMap> = {
@@ -148,13 +153,12 @@ export const DefaultBaseTypeMap: Required<BaseTypeMap> = {
         }, {})`,
     },
   },
-  // unknown: {
-  //   default: {
-  //     type: "any",
-  //     responseConverter: (s) => s,
-  //     requestConverter: (s) => s,
-  //   },
-  // },
+};
+
+export const DefaultUnknownType: BasicTypeAndConverter = {
+  type: "any",
+  requestConverter: (s) => s,
+  responseConverter: (s) => s,
 };
 
 const _ApiResponseBaseTypeMap: DeepPartial<BaseTypeMap> = {

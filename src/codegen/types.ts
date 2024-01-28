@@ -1,18 +1,17 @@
-import {BaseTypeMap} from "../type-mapping/map-base-type";
 import {Operation, Swagger} from "../swagger/types";
 import {GroupedArray} from "../utils/arrays";
+import {TypeConfig, UserTypeConfig} from "../type-mapping/type-config";
 
 export type SchemaTypeDeclaration = "class" | "interface" | "type";
 export type MethodNameMode = "operationId" | "path";
 
-export interface UserCodegenOptions {
+export interface UserCodegenOptions extends UserTypeConfig {
   source: any;
   outputDirectory: string;
 
   createTagServices?: boolean;
   serviceNameSuffix?: string;
   apiClassName?: string;
-  baseTypeMap?: BaseTypeMap;
   extraImports?: string;
   notRequiredFieldsOptional?: boolean;
   allowLiteralGenerics?: boolean;
@@ -23,7 +22,7 @@ export interface UserCodegenOptions {
   generateHttpMethods?: boolean;
 }
 
-export interface CodegenOptions {
+export interface CodegenOptions extends TypeConfig {
   /* Helper configs */
   swagger: Swagger;
   operations: Operation[];
@@ -34,7 +33,6 @@ export interface CodegenOptions {
   createTagServices: boolean;
   serviceNameSuffix: string;
   apiClassName: string;
-  baseTypeMap: Required<BaseTypeMap>;
   notRequiredFieldsOptional: boolean;
   allowLiteralGenerics: boolean;
   schemaTypeDeclaration: SchemaTypeDeclaration;
