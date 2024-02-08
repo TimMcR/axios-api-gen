@@ -6,6 +6,7 @@ import {getFormDataFunctionName} from "../helper-declarations/get-form-data";
 import {Operation, Schema} from "../swagger/types";
 import {decapitalizeFirstChar} from "../utils/string";
 import {getTypeAssignment} from "../type-mapping/get-type-assignment";
+import {ApiResponseBaseTypeMap} from "../type-mapping/base-type-map";
 
 type getApiRequestInfoProps = {
   operation: Operation;
@@ -173,7 +174,7 @@ export function getApiRequestInfo(
       ignoreRef: true,
       sourceRequired: true,
     },
-    {...options},
+    {...options, baseTypeMap: ApiResponseBaseTypeMap},
   );
 
   if (responseSchema) {

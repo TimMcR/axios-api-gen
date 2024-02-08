@@ -17,6 +17,14 @@ type getTypeProps = {
  * Returns the type of the schema
  */
 export function getType(props: getTypeProps, options: CodegenOptions): string {
+  const prefix = getTypePrefix(props, options);
+
+  const postfix = getTypePostfix(props);
+
+  return prefix + postfix;
+}
+
+function getTypePrefix(props: getTypeProps, options: CodegenOptions) {
   const {swagger, baseTypeMap, notRequiredFieldsOptional, unknownType} =
     options;
 
@@ -32,10 +40,7 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       options,
     );
 
-    return applySchemaPrefix(
-      props,
-      baseTypeMap["dictionary"].default.type(valueType),
-    );
+    return baseTypeMap["dictionary"].default.type(valueType);
   }
 
   if (schema.type === "object") {
@@ -59,10 +64,7 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       },
     );
 
-    return applySchemaPrefix(
-      props,
-      createCleanFile(["{", ...classProperties, "}"]),
-    );
+    return createCleanFile(["{", ...classProperties, "}"]);
   }
 
   if (schema.$ref) {
@@ -73,7 +75,7 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       return getType({...props, schema: refSchema}, options);
     }
 
-    return applySchemaPrefix(props, cleanGenericString(refName));
+    return cleanGenericString(refName);
   }
 
   if (schema.type === "array" && schema.items) {
@@ -82,30 +84,28 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       options,
     );
 
-    return applySchemaPrefix(props, baseTypeMap.array.default.type(innerType));
+    return baseTypeMap.array.default.type(innerType);
   }
 
-  const type = getBasicTypeMap(schema, options).type;
-
-  return applySchemaPrefix(props, type);
+  return getBasicTypeMap(schema, options).type;
 }
 
-function applySchemaPrefix(props: getTypeProps, type: string): string {
+function getTypePostfix(props: getTypeProps): string {
   const {schema, includeUndefinedType = true, sourceRequired} = props;
 
   if (!schema) {
-    return type;
+    return "";
   }
 
   let prefix = "";
-
-  if (schema.nullable && schema.nullable) {
-    prefix += " | null";
-  }
 
   if (includeUndefinedType && !sourceRequired) {
     prefix += " | undefined";
   }
 
-  return type + prefix;
+  if (schema.nullable && schema.nullable) {
+    prefix += " | null";
+  }
+
+  return prefix;
 }
