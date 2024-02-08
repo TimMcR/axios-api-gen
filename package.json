@@ -1,0 +1,27 @@
+{
+  "name": "axios-api-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"src/**\" && tsc --noEmit",
+    "codegen": "ts-node ./test/test.ts"
+  },
+  "keywords": ["axios", "typescript", "Swagger", "Open API"],
+  "author": "Timothy McReynolds",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "fs": "^0.0.1-security"
+  }
+}
