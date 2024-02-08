@@ -1,5 +1,6 @@
 export const getFormDataFunctionName = "getFormData";
 
+// Credit to https://github.com/Manweill/swagger-axios-codegen
 export const getFormDataFunctionDeclaration = `
 /**
  * Helper Method for getting form data from request body
