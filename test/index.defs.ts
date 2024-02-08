@@ -4,18 +4,18 @@ import { AxiosInstance, AxiosRequestConfig } from "axios";
 /**
  * A user of the application
  */
-export interface User {
-  id?: number;
-  username?: string;
+export class User {
+  "id"?: number;
+  "username"?: string;
 }
 
 /**
  * A test post schema
  */
-export interface Post {
-  id?: number;
-  title?: string;
-  content?: string;
+export class Post {
+  "id"?: number;
+  "title"?: string;
+  "content"?: string;
 }
 
 interface IRequestConfig {

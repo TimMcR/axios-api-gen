@@ -5,7 +5,7 @@ import {getType} from "../type-mapping/get-type";
 import {createCleanFile} from "../utils/string";
 
 export function generateSchemas(options: CodegenOptions): string {
-  const {swagger, schemaTypeDeclaration} = options;
+  const {swagger} = options;
 
   const componentSchema = swagger.components.schemas;
 
@@ -25,9 +25,7 @@ export function generateSchemas(options: CodegenOptions): string {
 
       const baseClass = createCleanFile([
         schemaDocumentation,
-        `export ${schemaTypeDeclaration} ${className} ${
-          schemaTypeDeclaration === "type" ? "=" : ""
-        } ${classType}`,
+        `export class ${className} ${classType}`,
         "",
       ]);
 

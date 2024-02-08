@@ -2,7 +2,6 @@ import {Operation, Swagger} from "../swagger/types";
 import {GroupedArray} from "../utils/arrays";
 import {TypeConfig, UserTypeConfig} from "../type-mapping/type-config";
 
-export type SchemaTypeDeclaration = "class" | "interface" | "type";
 export type MethodNameMode = "operationId" | "path";
 
 export interface UserCodegenOptions extends UserTypeConfig {
@@ -14,7 +13,6 @@ export interface UserCodegenOptions extends UserTypeConfig {
   apiClassName?: string;
   extraImports?: string;
   notRequiredFieldsOptional?: boolean;
-  schemaTypeDeclaration?: SchemaTypeDeclaration;
   createReadMe?: boolean;
   methodNameMode?: MethodNameMode;
   createMethodsForAllTags?: boolean;
@@ -33,7 +31,6 @@ export interface CodegenOptions extends TypeConfig {
   serviceNameSuffix: string;
   apiClassName: string;
   notRequiredFieldsOptional: boolean;
-  schemaTypeDeclaration: SchemaTypeDeclaration;
   createReadMe: boolean;
   methodNameMode: MethodNameMode;
   createMethodsForAllTags: boolean; // Puts the operation in all tag services in the tag array when true
