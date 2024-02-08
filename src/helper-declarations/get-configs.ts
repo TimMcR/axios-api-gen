@@ -2,6 +2,7 @@ import {IRequestConfigString} from "./request-config";
 
 export const getConfigsFunctionName = "getConfigs";
 
+// Credit to https://github.com/Manweill/swagger-axios-codegen
 export const getConfigsDeclaration = `
 /**
  * Helper method for getting axios configs
