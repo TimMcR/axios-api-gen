@@ -1,5 +1,5 @@
 import {generateApiClass} from "./generate-api-class";
-import {generateBaseClasses} from "./generate-base-class";
+import {generateSchemas} from "./generate-schemas";
 import {existsSync, mkdirSync, writeFileSync} from "fs";
 import {format} from "prettier";
 import {IRequestConfigDeclaration} from "../helper-declarations/request-config";
@@ -15,7 +15,7 @@ export function codegen(options: UserCodegenOptions) {
 
   const codegenOptions = getCodegenOptions(options);
 
-  const baseClasses = generateBaseClasses(codegenOptions);
+  const baseClasses = generateSchemas(codegenOptions);
 
   const apiClass = generateApiClass(codegenOptions);
 

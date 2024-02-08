@@ -21,12 +21,7 @@ type getTypeOptions = Omit<CodegenOptions, "baseTypeMap"> & {
  * Returns the type of the schema
  */
 export function getType(props: getTypeProps, options: getTypeOptions): string {
-  const {
-    swagger,
-    baseTypeMap,
-    allowLiteralGenerics,
-    notRequiredFieldsOptional,
-  } = options;
+  const {swagger, baseTypeMap, notRequiredFieldsOptional} = options;
 
   const {
     schema,
@@ -70,9 +65,7 @@ export function getType(props: getTypeProps, options: getTypeOptions): string {
   if (schema.$ref) {
     const refName = cleanRefName(schema.$ref);
 
-    const refIsGeneric = refName.indexOf("<") > -1;
-
-    if (ignoreRef || (!allowLiteralGenerics && refIsGeneric)) {
+    if (ignoreRef) {
       const refSchema = swagger.components.schemas[refName];
       return getType({...props, schema: refSchema}, options);
     }

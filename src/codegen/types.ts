@@ -14,7 +14,6 @@ export interface UserCodegenOptions extends UserTypeConfig {
   apiClassName?: string;
   extraImports?: string;
   notRequiredFieldsOptional?: boolean;
-  allowLiteralGenerics?: boolean;
   schemaTypeDeclaration?: SchemaTypeDeclaration;
   createReadMe?: boolean;
   methodNameMode?: MethodNameMode;
@@ -34,7 +33,6 @@ export interface CodegenOptions extends TypeConfig {
   serviceNameSuffix: string;
   apiClassName: string;
   notRequiredFieldsOptional: boolean;
-  allowLiteralGenerics: boolean;
   schemaTypeDeclaration: SchemaTypeDeclaration;
   createReadMe: boolean;
   methodNameMode: MethodNameMode;

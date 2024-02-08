@@ -7,7 +7,6 @@ export function getCodegenOptions(options: UserCodegenOptions): CodegenOptions {
   const swagger = options.source as Swagger;
 
   const {
-    allowLiteralGenerics = false,
     apiClassName = cleanApiTitle(swagger.info.title),
     createTagServices = true,
     notRequiredFieldsOptional = true,
@@ -28,7 +27,6 @@ export function getCodegenOptions(options: UserCodegenOptions): CodegenOptions {
     });
 
   return {
-    allowLiteralGenerics,
     apiClassName,
     createTagServices,
     notRequiredFieldsOptional,
