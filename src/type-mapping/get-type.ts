@@ -6,7 +6,7 @@ import {getSchemaIsDictionary} from "./get-schema-is-dictionary";
 import {cleanRefName} from "../utils/clean-ref-name";
 
 type getTypeProps = {
-  schema: Schema;
+  schema: Schema | undefined;
   sourceRequired: boolean | undefined;
   includeUndefinedType?: boolean;
   ignoreRef?: boolean;
@@ -16,7 +16,8 @@ type getTypeProps = {
  * Returns the type of the schema
  */
 export function getType(props: getTypeProps, options: CodegenOptions): string {
-  const {swagger, baseTypeMap, notRequiredFieldsOptional} = options;
+  const {swagger, baseTypeMap, notRequiredFieldsOptional, unknownType} =
+    options;
 
   const {
     schema,
@@ -24,6 +25,10 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
     includeUndefinedType = true,
     ignoreRef = false,
   } = props;
+
+  if (!schema) {
+    return unknownType.type;
+  }
 
   if (getSchemaIsDictionary(schema)) {
     const valueType = getType(
@@ -79,13 +84,13 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
     }
 
     if (!schema.type) {
-      return "any";
+      return unknownType.type;
     }
 
     const baseType = baseTypeMap[schema.type];
 
     if (!baseType) {
-      return "any";
+      return unknownType.type;
     }
 
     if (!schema.format) {

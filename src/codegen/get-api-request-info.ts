@@ -49,7 +49,7 @@ export function getApiRequestInfo(
       )
     : "void";
 
-  const {schema: requestbodySchema, contentType} = getRequestBodySchema(method);
+  const {schema: requestBodySchema, contentType} = getRequestBodySchema(method);
 
   const requestBodyRequired = method.requestBody?.required ?? false;
 
@@ -74,17 +74,15 @@ export function getApiRequestInfo(
       );
     }, "");
 
-  const functionBodyType = requestbodySchema
-    ? getType(
-        {
-          schema: requestbodySchema,
-          sourceRequired: requestBodyRequired,
-        },
-        options,
-      )
-    : null;
+  const functionBodyType = getType(
+    {
+      schema: requestBodySchema,
+      sourceRequired: requestBodyRequired,
+    },
+    options,
+  );
 
-  const bodyDeclaration = requestbodySchema
+  const bodyDeclaration = requestBodySchema
     ? `body${requestBodyRequired ? "" : "?"}: ${functionBodyType}`
     : "";
 
@@ -144,11 +142,11 @@ export function getApiRequestInfo(
 
   let assignRequestBodyToConfig = "";
 
-  if (requestbodySchema && contentType) {
+  if (requestBodySchema && contentType) {
     if (contentType === "application/json") {
       assignRequestBodyToConfig = `${baseAssignment} ${getTypeAssignment(
         {
-          schema: requestbodySchema,
+          schema: requestBodySchema,
           source: paramBodySource,
           typeMapping: "request",
           sourceNullable: false,
@@ -171,16 +169,14 @@ export function getApiRequestInfo(
 
   let responseAssignments = "data";
 
-  const responseType = responseSchema
-    ? getType(
-        {
-          schema: responseSchema,
-          ignoreRef: true,
-          sourceRequired: true,
-        },
-        {...options, baseTypeMap: ApiResponseBaseTypeMap},
-      )
-    : "any";
+  const responseType = getType(
+    {
+      schema: responseSchema,
+      ignoreRef: true,
+      sourceRequired: true,
+    },
+    {...options, baseTypeMap: ApiResponseBaseTypeMap},
+  );
 
   if (responseSchema) {
     responseAssignments = getTypeAssignment(

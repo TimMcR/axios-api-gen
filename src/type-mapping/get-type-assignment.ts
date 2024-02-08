@@ -7,7 +7,7 @@ import {ApiResponseBaseTypeMap} from "./base-type-map";
 import {getBasicTypeMap} from "./get-basic-type-map";
 
 type getTypeAssignmentProps = {
-  schema: Schema;
+  schema: Schema | undefined;
   source: string;
   sourceRequired: boolean | undefined;
   sourceNullable: boolean | undefined;
@@ -21,9 +21,16 @@ export function getTypeAssignment(
   props: getTypeAssignmentProps,
   options: CodegenOptions,
 ): string {
-  const {swagger, baseTypeMap} = options;
+  const {swagger, baseTypeMap, unknownType} = options;
 
   const {schema, source, typeMapping, sourceNullable, sourceRequired} = props;
+
+  const converterType =
+    typeMapping === "request" ? "requestConverter" : "responseConverter";
+
+  if (!schema) {
+    return unknownType[converterType](source);
+  }
 
   const typeSatisfies =
     " satisfies " +
@@ -39,9 +46,6 @@ export function getTypeAssignment(
   const assignmentSafety = `${
     !sourceRequired ? `${source} === undefined ? undefined : ` : ""
   } ${sourceNullable ? `${source} === null ? null : ` : ""}`;
-
-  const converterType =
-    typeMapping === "request" ? "requestConverter" : "responseConverter";
 
   if (getSchemaIsDictionary(schema)) {
     const dictionaryProperties = baseTypeMap.dictionary.default[converterType](
