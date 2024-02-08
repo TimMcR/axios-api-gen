@@ -4,6 +4,7 @@ import {Schema} from "../swagger/types";
 import {createCleanFile} from "../utils/string";
 import {getSchemaIsDictionary} from "./get-schema-is-dictionary";
 import {cleanRefName} from "../utils/clean-ref-name";
+import {getBasicTypeMap} from "./get-basic-type-map";
 
 type getTypeProps = {
   schema: Schema | undefined;
@@ -19,12 +20,7 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
   const {swagger, baseTypeMap, notRequiredFieldsOptional, unknownType} =
     options;
 
-  const {
-    schema,
-    sourceRequired,
-    includeUndefinedType = true,
-    ignoreRef = false,
-  } = props;
+  const {schema, ignoreRef = false} = props;
 
   if (!schema) {
     return unknownType.type;
@@ -36,11 +32,15 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       options,
     );
 
-    return baseTypeMap["dictionary"].default.type(valueType);
+    return applySchemaPrefix(
+      props,
+      baseTypeMap["dictionary"].default.type(valueType),
+    );
   }
 
   if (schema.type === "object") {
     const objectProperties = schema.properties || {};
+
     const classProperties = Object.entries(objectProperties).map(
       ([propertyName, propertySchema]) => {
         const optional =
@@ -59,7 +59,10 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       },
     );
 
-    return createCleanFile(["{", ...classProperties, "}"]);
+    return applySchemaPrefix(
+      props,
+      createCleanFile(["{", ...classProperties, "}"]),
+    );
   }
 
   if (schema.$ref) {
@@ -70,51 +73,39 @@ export function getType(props: getTypeProps, options: CodegenOptions): string {
       return getType({...props, schema: refSchema}, options);
     }
 
-    return cleanGenericString(refName);
+    return applySchemaPrefix(props, cleanGenericString(refName));
   }
 
-  function getBasicType(schema: Schema): string {
-    if (schema.type === "array" && schema.items) {
-      const innerType = getType(
-        {...props, sourceRequired: true, schema: schema.items},
-        options,
-      );
+  if (schema.type === "array" && schema.items) {
+    const innerType = getType(
+      {...props, sourceRequired: true, schema: schema.items},
+      options,
+    );
 
-      return baseTypeMap.array.default.type(innerType);
-    }
-
-    if (!schema.type) {
-      return unknownType.type;
-    }
-
-    const baseType = baseTypeMap[schema.type];
-
-    if (!baseType) {
-      return unknownType.type;
-    }
-
-    if (!schema.format) {
-      return baseType["default"]?.type;
-    }
-
-    const formatType = baseType[schema.format];
-
-    if (!formatType) {
-      return baseType["default"].type;
-    }
-
-    return formatType.type;
+    return applySchemaPrefix(props, baseTypeMap.array.default.type(innerType));
   }
 
-  let _type = getBasicType(schema);
+  const type = getBasicTypeMap(schema, options).type;
+
+  return applySchemaPrefix(props, type);
+}
+
+function applySchemaPrefix(props: getTypeProps, type: string): string {
+  const {schema, includeUndefinedType = true, sourceRequired} = props;
+
+  if (!schema) {
+    return type;
+  }
+
+  let prefix = "";
 
   if (schema.nullable && schema.nullable) {
-    _type += " | null";
+    prefix += " | null";
   }
 
   if (includeUndefinedType && !sourceRequired) {
-    _type += " | undefined";
+    prefix += " | undefined";
   }
 
-  return _type;
+  return type + prefix;
 }

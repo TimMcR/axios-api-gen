@@ -1,20 +1,9 @@
 import {
-  DeepPartial,
-  LooseAutoComplete,
-  mergeWithDefaults,
-} from "../utils/types";
-
-type KnownStringFormats =
-  | "date"
-  | "date-time"
-  | "password"
-  | "byte"
-  | "binary"
-  | "uuid";
-
-type KnownIntegerFormats = "int32";
-
-type KnownNumberFormats = "double";
+  KnownIntegerFormats,
+  KnownNumberFormats,
+  KnownStringFormats,
+} from "../swagger/types";
+import {DeepPartial, LooseAutoComplete} from "../utils/types";
 
 export type BasicTypeAndConverter = {
   type: string;
@@ -23,7 +12,7 @@ export type BasicTypeAndConverter = {
 };
 
 /**
- * Type maps that does not rely on a source type
+ * Type maps that do not rely on a source type
  */
 export type BasicTypeMapping<TFormats extends string = "default"> = Record<
   LooseAutoComplete<TFormats | "default">,
@@ -69,13 +58,13 @@ export const DefaultBaseTypeMap: Required<BaseTypeMap> = {
     },
     date: {
       type: "Date",
-      responseConverter: (s) => `new Date(${s})`, // new Date(s)
-      requestConverter: (s) => `${s}.toISOString()`, // s.toISOString()
+      responseConverter: (s) => `new Date(${s})`,
+      requestConverter: (s) => `${s}.toISOString()`,
     },
     "date-time": {
       type: "Date",
-      responseConverter: (s) => `new Date(${s})`, // new Date(s)
-      requestConverter: (s) => `${s}.toISOString()`, // s.toISOString()
+      responseConverter: (s) => `new Date(${s})`,
+      requestConverter: (s) => `${s}.toISOString()`,
     },
     password: {
       type: "string",
@@ -109,6 +98,11 @@ export const DefaultBaseTypeMap: Required<BaseTypeMap> = {
       responseConverter: (s) => s,
       requestConverter: (s) => s,
     },
+    int64: {
+      type: "number",
+      responseConverter: (s) => s,
+      requestConverter: (s) => s,
+    },
   },
   number: {
     default: {
@@ -117,6 +111,11 @@ export const DefaultBaseTypeMap: Required<BaseTypeMap> = {
       requestConverter: (s) => s,
     },
     double: {
+      type: "number",
+      responseConverter: (s) => s,
+      requestConverter: (s) => s,
+    },
+    float: {
       type: "number",
       responseConverter: (s) => s,
       requestConverter: (s) => s,
@@ -192,12 +191,18 @@ const _ApiResponseBaseTypeMap: DeepPartial<BaseTypeMap> = {
     int32: {
       type: "number",
     },
+    int64: {
+      type: "number",
+    },
   },
   number: {
     default: {
       type: "number",
     },
     double: {
+      type: "number",
+    },
+    float: {
       type: "number",
     },
   },
@@ -218,7 +223,4 @@ const _ApiResponseBaseTypeMap: DeepPartial<BaseTypeMap> = {
   },
 };
 
-export const ApiResponseBaseTypeMap = mergeWithDefaults<BaseTypeMap>(
-  _ApiResponseBaseTypeMap,
-  DefaultBaseTypeMap,
-);
+export const ApiResponseBaseTypeMap = _ApiResponseBaseTypeMap as BaseTypeMap;

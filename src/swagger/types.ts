@@ -91,23 +91,34 @@ export function isKnownSchemaType(
   return Object.keys(KnownSchemaType).some((key) => key === type);
 }
 
-export const KnownSchemaFormat = {
-  default: "default",
-  date: "date",
-  "date-time": "date-time",
-  password: "password",
-  byte: "byte",
-  binary: "binary",
-  int32: "int32",
-  double: "double",
-};
-export type KnownSchemaFormat = keyof typeof KnownSchemaFormat;
+export type KnownStringFormats =
+  | "date"
+  | "date-time"
+  | "password"
+  | "byte"
+  | "binary"
+  | "uuid";
 
-export function isKnownSchemaFormat(
-  type: LooseAutoComplete<KnownSchemaFormat>,
-): type is KnownSchemaFormat {
-  return Object.keys(KnownSchemaFormat).some((key) => key === type);
-}
+export type KnownIntegerFormats = "int32" | "int64";
+
+export type KnownNumberFormats = "double" | "float";
+
+export type KnownSchemaFormat =
+  | KnownStringFormats
+  | KnownIntegerFormats
+  | KnownNumberFormats;
+
+export const KnownBaseSchemaFormatMap: Record<
+  KnownSchemaType,
+  KnownSchemaFormat[]
+> = {
+  string: ["date", "date-time", "password", "byte", "binary"],
+  number: ["float", "double"],
+  integer: ["int32", "int64"],
+  array: [],
+  boolean: [],
+  object: [],
+};
 
 export interface Schema {
   type?: LooseAutoComplete<KnownSchemaType>;

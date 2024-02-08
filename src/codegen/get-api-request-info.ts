@@ -3,7 +3,6 @@ import {getRequestBodySchema} from "./get-request-body-schema";
 import {getType} from "../type-mapping/get-type";
 import {getConfigsFunctionName} from "../helper-declarations/get-configs";
 import {getFormDataFunctionName} from "../helper-declarations/get-form-data";
-import {ApiResponseBaseTypeMap} from "../type-mapping/base-type-map";
 import {Operation, Schema} from "../swagger/types";
 import {decapitalizeFirstChar} from "../utils/string";
 import {getTypeAssignment} from "../type-mapping/get-type-assignment";
@@ -111,21 +110,21 @@ export function getApiRequestInfo(
 
       const source = `${paramsSourceString}['${cleanedQueryName}']`;
 
-      const typeAssignment = getTypeAssignment(
+      const queryTypeAssignment = getTypeAssignment(
         {
           schema: query.schema,
           source,
           typeMapping: "request",
-          sourceNullable: false,
           sourceRequired: query.required,
         },
         options,
       );
 
-      let assignment = _base.concat(`'${query.name}': ${typeAssignment},\n`);
+      let assignment = _base.concat(
+        `'${query.name}': ${queryTypeAssignment},\n`,
+      );
 
       if (index === length - 1) {
-        // assignment = assignment.concat(`} satisfies ${queryParamsType}\n`);
         assignment = assignment.concat(`}\n`);
       }
 
@@ -149,7 +148,6 @@ export function getApiRequestInfo(
           schema: requestBodySchema,
           source: paramBodySource,
           typeMapping: "request",
-          sourceNullable: false,
           sourceRequired: requestBodyRequired,
         },
         options,
@@ -175,7 +173,7 @@ export function getApiRequestInfo(
       ignoreRef: true,
       sourceRequired: true,
     },
-    {...options, baseTypeMap: ApiResponseBaseTypeMap},
+    {...options},
   );
 
   if (responseSchema) {
@@ -184,7 +182,6 @@ export function getApiRequestInfo(
         schema: responseSchema,
         source: `data`,
         typeMapping: "response",
-        sourceNullable: false,
         sourceRequired: true,
       },
       options,

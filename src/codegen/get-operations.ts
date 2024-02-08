@@ -73,10 +73,10 @@ const tagNameSort = (
   const isFalsyB = !b.groupKey;
 
   if (isFalsyA && !isFalsyB) {
-    return 1; // Move a to the end
+    return 1;
   } else if (!isFalsyA && isFalsyB) {
-    return -1; // Move b to the end
+    return -1;
   }
 
-  return 0; // Maintain the order
+  return 0;
 };

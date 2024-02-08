@@ -1,4 +1,8 @@
-import {Schema, isKnownSchemaFormat, isKnownSchemaType} from "../swagger/types";
+import {
+  KnownBaseSchemaFormatMap,
+  Schema,
+  isKnownSchemaType,
+} from "../swagger/types";
 import {BasicTypeAndConverter} from "./base-type-map";
 import {TypeConfig} from "./type-config";
 
@@ -16,14 +20,18 @@ export function getBasicTypeMap(
     throw new Error("Schema is not a basic type");
   }
 
-  if (isKnownSchemaType(schema.type)) {
+  const knownSchemaType = KnownBaseSchemaFormatMap[schema.type];
+
+  if (knownSchemaType) {
     const schemaType = baseTypeMap[schema.type];
 
-    if (!schema.format || !isKnownSchemaFormat(schema.format)) {
-      return schemaType.default as BasicTypeAndConverter;
+    const knownSchemaFormat = knownSchemaType.find((x) => x === schema.format);
+
+    if (knownSchemaFormat) {
+      return schemaType[knownSchemaFormat] as BasicTypeAndConverter;
     }
 
-    return schemaType[schema.format] as BasicTypeAndConverter;
+    return schemaType.default as BasicTypeAndConverter;
   }
 
   const extraType = getExtraTypeMap(schema, options);
