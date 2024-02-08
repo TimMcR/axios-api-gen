@@ -1,6 +1,5 @@
 import {cleanGenericString} from "../utils/clean-generic-string";
 import {CodegenOptions} from "../codegen/types";
-import {BaseTypeMap} from "./base-type-map";
 import {Schema} from "../swagger/types";
 import {createCleanFile} from "../utils/string";
 import {getSchemaIsDictionary} from "./get-schema-is-dictionary";
@@ -13,14 +12,10 @@ type getTypeProps = {
   ignoreRef?: boolean;
 };
 
-type getTypeOptions = Omit<CodegenOptions, "baseTypeMap"> & {
-  baseTypeMap: BaseTypeMap;
-};
-
 /**
  * Returns the type of the schema
  */
-export function getType(props: getTypeProps, options: getTypeOptions): string {
+export function getType(props: getTypeProps, options: CodegenOptions): string {
   const {swagger, baseTypeMap, notRequiredFieldsOptional} = options;
 
   const {
